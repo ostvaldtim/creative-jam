@@ -2,9 +2,9 @@
 
 AI-assisted product for turning a brief into a structured research-driven report.
 
-## What is public here
+![Creative Jam landing](docs/screenshots/landing-hero.webp)
 
-This repository contains the **public frontend/showcase** of the current product:
+## What is public here
 
 - `landing/` — product landing
 - `frontend/` — application interface
@@ -12,11 +12,17 @@ This repository contains the **public frontend/showcase** of the current product
 
 The current **backend, AI pipeline, database and payment implementation are private**.
 
+## Product
+
+| App | Pricing |
+| --- | --- |
+| ![Creative Jam app](docs/screenshots/app-dashboard.webp) | ![Creative Jam pricing](docs/screenshots/pricing.webp) |
+
 ## My role
 
 **Co-founder · AI-assisted Full-stack Developer**
 
-I work on most of the frontend/backend implementation, database setup, payment integration, AI report-generation pipeline, refactoring and validation of AI-generated code.
+Frontend/backend implementation, database setup, payment integration, AI report-generation pipeline, refactoring and validation of AI-generated code.
 
 ## Stack
 
@@ -24,7 +30,7 @@ I work on most of the frontend/backend implementation, database setup, payment i
 
 ## Status
 
-Active development. The product has been tested by real users and was previously deployed on Hugging Face Spaces during prototyping.
+Active development. Tested by real users; previously deployed on Hugging Face Spaces during prototyping.
 
 ---
 
