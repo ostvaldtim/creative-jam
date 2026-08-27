@@ -1,0 +1,41 @@
+﻿/* Logo Brand Styling */
+.logo-brand {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    justify-content: center;
+    margin-bottom: 24px;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Sidebar Logo Styling */
+.logo-text {
+    display: flex;
+    gap: 5px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    font-size: 22px;
+    line-height: 1;
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+}
+
+.logo-text-white {
+    color: var(--text);
+}
+
+.logo-text-orange {
+    color: var(--orange);
+}
+
+/* Auth screen logo (larger variant) */
+.logo-auth {
+    font-weight: 700;
+    font-size: 26px;
+    letter-spacing: 1px;
+}
+
+/* Auth Screen Logo Override (keeping consistency) */
+.auth-header .logo-brand span {
+    text-transform: uppercase;
+}

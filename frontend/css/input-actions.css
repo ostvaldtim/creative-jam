@@ -1,0 +1,215 @@
+/* Action Buttons in Input Area */
+.input-actions {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 12px;
+}
+
+.upload-row {
+    display: flex;
+    margin-top: 8px;
+}
+
+.upload-row .upload-btn {
+    height: 34px;
+    font-size: 12px;
+    padding: 0 12px;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 16px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    color: var(--text-3);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.action-btn:hover {
+    background: var(--surface-3);
+    color: var(--text);
+    border-color: var(--text-3);
+}
+
+.action-btn svg {
+    width: 18px;
+    height: 18px;
+    opacity: 0.7;
+}
+
+/* Brief template buttons */
+.brief-templates {
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+.brief-tpl-btn:hover {
+    background: var(--orange-dim);
+    border-color: rgba(255, 104, 0, 0.3);
+    color: var(--orange);
+}
+
+.brief-tpl-btn:hover svg {
+    opacity: 1;
+    color: var(--orange);
+}
+
+.action-btn.active {
+    background: rgba(255, 104, 0, 0.1);
+    border-color: rgba(255, 104, 0, 0.3);
+    color: var(--orange);
+}
+
+.action-btn.active svg {
+    opacity: 1;
+    color: var(--orange);
+}
+
+/* File Preview */
+.file-preview-area {
+    margin-top: 12px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.file-preview-item {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    animation: fadeIn 0.3s ease;
+}
+
+.file-preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.file-preview-remove {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 16px;
+    height: 16px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.file-preview-remove:hover {
+    background: rgba(255, 0, 0, 0.8);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ── Mobile: vertical stack ── */
+@media (max-width: 480px) {
+    .input-actions {
+        flex-direction: column;
+    }
+
+    .brief-templates {
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+
+    .action-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 767px) {
+    .input-actions {
+        gap: 8px;
+        padding-top: 12px;
+        margin-top: 12px;
+    }
+}
+
+/* PATCH (правка 44): превью для документов, а не только картинок.
+   Раньше любой файл рисовался квадратиком 60x60 без имени и без статуса разбора. */
+.file-preview-item.file-preview-item--doc {
+    width: auto;
+    min-width: 150px;
+    max-width: 230px;
+    height: auto;
+    padding: 8px 26px 8px 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface, rgba(255, 255, 255, 0.04));
+}
+
+.file-preview-doc {
+    font-size: 18px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.file-preview-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.file-preview-name {
+    font-size: 12px;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.file-preview-status {
+    font-size: 10px;
+    line-height: 1.2;
+    opacity: 0.75;
+}
+
+.file-preview-status--pending {
+    opacity: 0.6;
+}
+
+.file-preview-status--ok {
+    color: var(--green, #3fae6b);
+}
+
+.file-preview-status--empty {
+    color: var(--orange, #d98a24);
+}
+
+.file-preview-status--error {
+    color: var(--red, #d9534f);
+}

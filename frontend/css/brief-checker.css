@@ -1,0 +1,167 @@
+/* BRIEF CHECKER STYLES - Harmonized with Project Design */
+
+/* Knowledge Selector */
+.knowledge-selector {
+    margin-bottom: 12px;
+}
+
+.knowledge-header {
+    margin-bottom: 8px;
+}
+
+.knowledge-title {
+    color: var(--text-3);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 500;
+}
+
+/* Mode Tabs - Subtle Style */
+.mode-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.mode-tab {
+    flex: 1;
+    padding: 8px 14px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-3);
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all var(--transition-fast) ease;
+}
+
+.mode-tab:hover {
+    border-color: rgba(255, 104, 0, 0.4);
+    color: var(--text-2);
+    background: rgba(255, 104, 0, 0.03);
+}
+
+.mode-tab.active {
+    border-color: var(--orange);
+    background: rgba(255, 104, 0, 0.08);
+    color: var(--orange);
+}
+
+.mode-description {
+    font-size: 12px;
+    color: var(--text-3);
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Brief Checker Real-Time Panel */
+.brief-checker-rt {
+    margin-top: 12px;
+}
+
+.brief-score-panel-rt {
+    padding: 16px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    transition: opacity var(--transition-normal) ease;
+}
+
+.brief-score-panel-rt.updating {
+    opacity: 0.6;
+}
+
+.score-header-rt {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.score-info-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.score-label-rt {
+    font-weight: 500;
+    color: var(--text-2);
+    font-size: 13px;
+}
+
+.score-value-rt {
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--orange);
+}
+
+/* Loading Spinner */
+.ai-loading-spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--border);
+    border-top-color: var(--orange);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Progress Bar */
+.score-bar-rt {
+    width: 100%;
+    height: 6px;
+    background: var(--surface);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.score-bar-fill-rt {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--orange), var(--orange-light));
+    border-radius: 3px;
+    transition: width var(--transition-slow) ease, background var(--transition-normal) ease;
+}
+
+/* Feedback Text */
+.score-feedback-rt {
+    color: var(--text-2);
+    line-height: 1.5;
+    margin: 0 0 6px 0;
+    font-size: 13px;
+}
+
+/* Status Messages */
+.score-status-rt {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 2px;
+}
+
+.score-status-rt.low {
+    color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.1);
+}
+
+.score-status-rt.medium {
+    color: #ffc107;
+    background: rgba(255, 193, 7, 0.1);
+}
+
+.score-status-rt.high {
+    color: #4caf50;
+    background: rgba(76, 175, 80, 0.1);
+}

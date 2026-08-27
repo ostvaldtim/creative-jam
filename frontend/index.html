@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Креативный Джем — ИИ-Продюсер</title>
+
+    <!-- Favicon & PWA -->
+    <link rel="icon" type="image/svg+xml" href="/platform-assets/favicon.svg">
+    <meta name="theme-color" content="#0A0A0A" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#FAFAFA" media="(prefers-color-scheme: light)">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Креативный Джем — ИИ-Продюсер">
+    <meta property="og:description"
+        content="Стратегия, контент, видео — всё за минуты. AI-платформа для создания маркетинговых материалов.">
+
+    <meta property="og:locale" content="ru_RU">
+    <meta name="description"
+        content="Креативный Джем — ИИ-продюсер для маркетинга. Стратегия, контент и видео за минуты.">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/platform-assets/css/base.css?v=6">
+    <link rel="stylesheet" href="/platform-assets/css/sidebar.css?v=6">
+    <link rel="stylesheet" href="/platform-assets/css/dashboard.css?v=5">
+    <link rel="stylesheet" href="/platform-assets/css/brief-form.css?v=5">
+
+    <link rel="stylesheet" href="/platform-assets/css/components.css?v=7">
+    <link rel="stylesheet" href="/platform-assets/css/notifications.css?v=5">
+
+    <link rel="stylesheet" href="/platform-assets/css/pricing.css?v=5">
+    <link rel="stylesheet" href="/platform-assets/css/glass-overlay.css?v=5">
+    <link rel="stylesheet" href="/platform-assets/css/input-actions.css?v=5">
+    <link rel="stylesheet" href="/platform-assets/css/brief-checker.css?v=5">
+    <link rel="stylesheet" href="/platform-assets/css/animations.css?v=5">
+    <link rel="stylesheet" href="/platform-assets/css/report-viewer.css?v=1">
+</head>
+
+<body data-theme="dark">
+    <div class="grid-bg"></div>
+    <div class="top-progress" id="topProgress"></div>
+
+    <!-- Auth is now handled on the landing page ("/") -->
+    <!-- Users are redirected here after successful authentication -->
+
+    <!-- Главное приложение -->
+    <div id="app" class="app" style="display: none;" data-sidebar="expanded">
+
+        <!-- === MAINTENANCE BANNER === -->
+        <div id="maintenanceBanner" class="maintenance-banner" style="display: none;">
+            <div class="maintenance-banner__content">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path
+                        d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                    <line x1="12" y1="9" x2="12" y2="13" />
+                    <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+                <span>⚙️ Плановые технические работы с <strong>02:00</strong> до <strong>04:00</strong> по МСК. Сервис
+                    может быть временно недоступен.</span>
+                <button class="maintenance-banner__close" onclick="dismissMaintenanceBanner()"
+                    aria-label="Закрыть уведомление">&times;</button>
+            </div>
+        </div>
+        <!-- Sidebar -->
+        <!-- Mobile hamburger (hidden on desktop) -->
+        <button class="mobile-hamburger" id="mobileHamburger" aria-label="Открыть меню">
+            <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                viewBox="0 0 24 24">
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+        <!-- Sidebar backdrop for mobile -->
+        <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="brand">
+                    <img src="/platform-assets/assets/images/logo-creative-jam-white.png" alt="Creative Jam"
+                        class="brand__img brand__img--dark">
+                    <img src="/platform-assets/assets/images/logo-creative-jam-black.png" alt="Creative Jam"
+                        class="brand__img brand__img--light">
+                </div>
+                <!-- ChatGPT-style toggle: two overlaid icons -->
+                <button class="sidebar-toggle" id="sidebarToggle" aria-expanded="true"
+                    aria-label="Свернуть боковую панель" title="Свернуть/развернуть меню">
+                    <!-- Brand icon: dark theme version -->
+                    <img src="/platform-assets/assets/images/logo-crj.png" alt="CRJ"
+                        class="toggle-brand toggle-brand-dark">
+                    <!-- Brand icon: light theme version -->
+                    <img src="/platform-assets/assets/images/logo-crj-light.png" alt="CRJ"
+                        class="toggle-brand toggle-brand-light">
+                    <!-- Expand/collapse panel icon: hidden when collapsed, shows on hover -->
+                    <svg class="toggle-panel" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" viewBox="0 0 24 24">
+                        <rect width="18" height="18" x="3" y="3" rx="2" />
+                        <path d="M9 3v18" />
+                        <path d="m16 15-3-3 3-3" />
+                    </svg>
+                </button>
+            </div>
+
+            <button class="new-btn" onclick="createNewJam()">
+                <svg viewBox="0 -960 960 960" fill="currentColor">
+                    <path
+                        d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z" />
+                </svg>
+                <span>Новый проект</span>
+            </button>
+
+            <div class="nav-section">
+                <div class="section-header">Проекты</div>
+                <div id="projectsList">
+                    <!-- Populated by projects.js -->
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <!-- User Menu -->
+                <div class="user-menu" id="userMenu">
+                    <div class="usage-card">
+                        <div class="usage-header">
+                            <span class="usage-title">Использование</span>
+                            <span class="usage-badge badge-trial" id="userPlanBadge">TRIAL</span>
+                        </div>
+                        <div class="usage-bar">
+                            <div class="usage-fill" id="usageFill" style="width: 0%"></div>
+                        </div>
+                        <div class="usage-text" id="usageText">0 из 100 джемов использовано</div>
+                    </div>
+
+                    <div class="menu-divider"></div>
+
+                    <div class="menu-item" onclick="OverlayManager.open('settings')">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M18 20a6 6 0 0 0-12 0" />
+                            <circle cx="12" cy="10" r="4" />
+                            <circle cx="12" cy="12" r="10" />
+                        </svg>
+                        Настройки аккаунта
+                    </div>
+
+
+                    <div class="menu-item" onclick="OverlayManager.open('billing')">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path
+                                d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
+                        </svg>
+                        Тарифы и оплата
+                    </div>
+
+                    <div class="menu-item" onclick="OverlayManager.open('invites')">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="m11 17 2 2a1 1 0 1 0 3-3" />
+                            <path
+                                d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4" />
+                            <path d="m21 3 1 11h-2" />
+                            <path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3" />
+                            <path d="M3 4h8" />
+                        </svg>
+                        Партнерская программа
+                        <span class="menu-badge">NEW</span>
+                    </div>
+
+                    <div class="menu-item" onclick="OverlayManager.open('orders')">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" viewBox="0 0 24 24">
+                            <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+                            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+                            <path d="M12 11h4" />
+                            <path d="M12 16h4" />
+                            <path d="M8 11h.01" />
+                            <path d="M8 16h.01" />
+                        </svg>
+                        Управление заказами
+                    </div>
+
+                    <div class="menu-divider"></div>
+
+                    <div class="theme-toggle">
+                        <div class="theme-toggle-label">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" viewBox="0 0 24 24">
+                                <path d="M12 8a2.83 2.83 0 0 0 4 4 4 4 0 1 1-4-4" />
+                                <path d="M12 2v2" />
+                                <path d="M12 20v2" />
+                                <path d="m4.9 4.9 1.4 1.4" />
+                                <path d="m17.7 17.7 1.4 1.4" />
+                                <path d="M2 12h2" />
+                                <path d="M20 12h2" />
+                                <path d="m6.3 17.7-1.4 1.4" />
+                                <path d="m19.1 4.9-1.4 1.4" />
+                            </svg>
+                            Тема
+                        </div>
+                        <button class="theme-toggle-slider js-theme-toggle" onclick="toggleTheme(event)" role="switch"
+                            aria-checked="false" aria-label="Переключить тему">
+                            <span class="theme-toggle-track">
+                                <span class="theme-toggle-icon icon-dark">
+                                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                                    </svg>
+                                </span>
+                                <span class="theme-toggle-icon icon-light">
+                                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="5" />
+                                        <path
+                                            d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                                    </svg>
+                                </span>
+                                <span class="theme-toggle-thumb"></span>
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="menu-divider"></div>
+
+                    <div class="menu-item" onclick="OverlayManager.open('help')">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path
+                                d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" />
+                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                            <path d="M12 17h.01" />
+                        </svg>
+                        Помощь
+                    </div>
+
+                    <div class="menu-item" onclick="OverlayManager.open('feedback')">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M22 10.5V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12.5" />
+                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                            <path d="M20 14v4" />
+                            <path d="M20 22v.01" />
+                        </svg>
+                        Сообщить об ошибке
+                    </div>
+
+                    <div class="menu-divider"></div>
+
+                    <div class="menu-item danger" onclick="handleLogout()">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="m16 17 5-5-5-5" />
+                            <path d="M21 12H9" />
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                        </svg>
+                        Выйти
+                    </div>
+                </div>
+
+                <button class="user-btn" onclick="event.stopPropagation(); toggleUserMenu()">
+                    <div class="user-avatar" id="userAvatar">А</div>
+                    <div class="user-info">
+                        <div class="user-text-content">
+                            <div class="user-name" id="userName">Артём Оствальд</div>
+                            <div class="user-subtext">Подписка</div>
+                        </div>
+                        <div class="user-plan" id="userPlan">TRIAL</div>
+                    </div>
+                </button>
+            </div>
+        </aside>
+
+        <main class="main" id="mainContent">
+            <div class="main-content-centerer">
+
+                <h1 class="welcome-title">Создавай<span>.</span></h1>
+                <p class="welcome-slogan">Стратегия, контент, видео — всё за минуты</p>
+
+                <div class="input-wrapper">
+                    <div class="input-box">
+                        <div class="input-row">
+                            <textarea class="input-field" id="taskInput"
+                                placeholder="Опишите ваш проект или бренд максимально подробно..." rows="1"></textarea>
+                            <button class="upload-icon-btn" onclick="document.getElementById('fileInput')?.click()"
+                                title="Загрузить файлы" aria-label="Загрузить файлы">
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                                </svg>
+                            </button>
+                            <button class="upload-icon-btn mic-btn" id="micBtn" onclick="VoiceDictation.toggle()"
+                                title="Голосовой ввод" aria-label="Голосовой ввод">
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M19 10v2a7 7 0 01-14 0v-2" />
+                                    <line x1="12" y1="19" x2="12" y2="23" />
+                                    <line x1="8" y1="23" x2="16" y2="23" />
+                                </svg>
+                            </button>
+                            <input type="file" id="fileInput" hidden multiple accept="image/*"
+                                onchange="handleFileUpload(this)">
+                            <button class="run-btn" onclick="startGeneration()">
+                                Старт
+                                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m5 12 7-7 7 7" />
+                                    <path d="M12 19V5" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Brief Checker Container (injected by brief-checker.js) -->
+
+                        <div class="quick-templates brief-templates">
+                            <div class="template-item brief-tpl-btn" onclick="insertTemplate('newbrand')"
+                                title="Создать бренд с нуля — ДНК, стратегия, позиционирование">
+                                <svg class="template-icon" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                                </svg>
+                                <span>Новый бренд</span>
+                            </div>
+                            <div class="template-item brief-tpl-btn" onclick="insertTemplate('scale')"
+                                title="Масштабировать существующий бренд — медиаплан, захват рынка">
+                                <svg class="template-icon" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                </svg>
+                                <span>Масштабирование</span>
+                            </div>
+                            <div class="template-item brief-tpl-btn" onclick="insertTemplate('creative')"
+                                title="Креативный завод — карточки, сценарии, сториборды за 3 минуты">
+                                <svg class="template-icon" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                </svg>
+                                <span>Креативный завод</span>
+                            </div>
+                            <div class="template-item brief-tpl-btn" onclick="insertTemplate('audit')"
+                                title="Прожарка стратегии — найти дыры, оценить риски, пересчитать">
+                                <svg class="template-icon" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z" />
+                                </svg>
+                                <span>Прожарка стратегии</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <!-- Custom Confirmation Modal -->
+    <div id="confirmModal" class="custom-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+
+        <div class="custom-modal">
+            <div class="custom-modal-icon">
+                <div
+                    style="width: 24px; height: 24px; background-color: var(--orange); -webkit-mask: url('/images/warning.png') center/contain no-repeat; mask: url('/images/warning.png') center/contain no-repeat;">
+                </div>
+            </div>
+            <h3 class="custom-modal-title" id="confirmTitle">Подтверждение</h3>
+            <p class="custom-modal-message" id="confirmMessage">Вы уверены?</p>
+            <div class="custom-modal-actions">
+                <button class="btn-secondary" id="confirmCancelBtn">Отмена</button>
+                <button class="btn-primary" id="confirmOkBtn">Да</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/platform-assets/js/a11y.js?v=1"></script>
+    <script src="/platform-assets/js/storage.js?v=4"></script>
+    <script src="/platform-assets/js/api.js?v=4"></script>
+    <script src="/platform-assets/js/theme.js?v=20260422"></script>
+    <script src="/platform-assets/js/auth.js?v=4"></script>
+    <script src="/platform-assets/js/overlay-manager.js?v=4"></script>
+    <script src="/platform-assets/js/help.js?v=4"></script>
+    <script src="/platform-assets/js/settings-overlay.js?v=4"></script>
+    <script src="/platform-assets/js/avatar-api.js?v=4"></script>
+    <script src="/platform-assets/js/brief-checker.js?v=4"></script>
+    <script src="/platform-assets/js/field-registry.js?v=6"></script>
+    <script src="/platform-assets/js/client-validation.js?v=6"></script>
+    <!-- React & ReactDOM (для ai-hint-panel и реферальной UI) -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="/platform-assets/js/ai-hint-panel.js?v=6"></script>
+    <script src="/platform-assets/js/brief-form.js?v=6"></script>
+    <script src="/platform-assets/js/sidebar.js?v=5"></script>
+    <script src="/platform-assets/js/projects.js?v=11"></script>
+    <script src="/platform-assets/js/progress-bar.js?v=1"></script>
+    <script src="/platform-assets/js/router.js?v=20260422"></script>
+    <script src="/platform-assets/js/generation.js?v=200"></script>
+    <script src="/platform-assets/js/file-upload.js?v=5"></script>
+    <script src="/platform-assets/js/voice-dictation.js?v=1"></script>
+    <script src="/platform-assets/js/app.js?v=6"></script>
+    <script src="/platform-assets/js/feedback.js?v=4"></script>
+    <script src="/platform-assets/js/invites.js?v=4"></script>
+
+    <!-- VK ID SDK -->
+    <script src="https://unpkg.com/@vkid/sdk@<3.0.0/dist-sdk/umd/index.js"></script>
+    <script type="text/javascript">
+        if ('VKIDSDK' in window) {
+            const VKID = window.VKIDSDK;
+
+            VKID.Config.init({
+                app: 54443210,
+                redirectUrl: 'https://oauth.vk.com/blank.html',
+                responseMode: VKID.ConfigResponseMode.Callback,
+                source: VKID.ConfigSource.LOWCODE,
+                scope: ''
+            });
+
+            // Создаём отдельные экземпляры для каждой вкладки
+            const oneTapLogin = new VKID.OneTap();
+            const oneTapSignup = new VKID.OneTap();
+
+            const containerLogin = document.getElementById('vk-auth-container');
+            const containerSignup = document.getElementById('vk-auth-container-signup');
+
+            // Общая функция обработки успешного входа
+            async function handleVKSuccess(payload) {
+                const code = payload.code;
+                const deviceId = payload.device_id;
+
+                try {
+                    // Обменять код на токен через VK SDK
+                    const vkData = await VKID.Auth.exchangeCode(code, deviceId);
+
+                    // Отправить данные на backend для создания пользователя
+                    const response = await fetch(`${API_URL}/auth/vk-sdk/callback`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            access_token: vkData.access_token,
+                            user_id: vkData.user_id,
+                            email: vkData.email
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok && data.token) {
+                        // Сохранить JWT токен и данные пользователя
+                        localStorage.setItem('authToken', data.token);
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                        showNotification('Вход через VK успешен!', 'success');
+                        setTimeout(() => showApp(data.user), 500);
+                    } else {
+                        showNotification(data.message || 'Ошибка авторизации через VK', 'error');
+                    }
+                } catch (error) {
+                    vkidOnError(error);
+                }
+            }
+
+            // Рендер для вкладки "Вход"
+            if (containerLogin) {
+                oneTapLogin.render({
+                    container: containerLogin,
+                    showAlternativeLogin: true
+                })
+                    .on(VKID.WidgetEvents.ERROR, vkidOnError)
+                    .on(VKID.OneTapInternalEvents.LOGIN_SUCCESS, handleVKSuccess);
+            }
+
+            // Рендер для вкладки "Регистрация"
+            if (containerSignup) {
+                oneTapSignup.render({
+                    container: containerSignup,
+                    showAlternativeLogin: true
+                })
+                    .on(VKID.WidgetEvents.ERROR, vkidOnError)
+                    .on(VKID.OneTapInternalEvents.LOGIN_SUCCESS, handleVKSuccess);
+            }
+
+            function vkidOnError(error) {
+                // Только логирование, без уведомлений
+                console.error('VK ID Error:', error);
+            }
+        }
+    </script>
+</body>
+
+</html><!-- Settings Overlay -->
+<!-- Unified Glass Overlay -->
+<div id="glassOverlay" class="glass-overlay" role="dialog" aria-modal="true" aria-label="Настройки">
+    <nav class="glass-nav">
+        <div class="glass-nav-brand">
+            <img src="/platform-assets/assets/images/logo-crj.png" alt="CRJ"
+                class="glass-nav-logo glass-nav-logo--dark">
+            <img src="/platform-assets/assets/images/logo-crj-light.png" alt="CRJ"
+                class="glass-nav-logo glass-nav-logo--light">
+        </div>
+        <button class="glass-back-btn" onclick="OverlayManager.close()">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path d="M15 19l-7-7 7-7" />
+            </svg>
+            Назад
+        </button>
+    </nav>
+
+    <!-- Fixed Menu Button (Bottom-Left) - Avatar Trigger -->
+    <button class="overlay-menu-trigger" id="overlayMenuTrigger" aria-label="Меню навигации">
+        <div class="overlay-menu-avatar" id="overlayMenuAvatar"
+            style="background-size: cover; background-position: center;">
+            P
+        </div>
+    </button>
+
+    <!-- Dropdown Menu - Redesigned -->
+    <div class="overlay-dropdown-menu" id="overlayDropdownMenu">
+        <!-- Usage Info -->
+        <div class="usage-card">
+            <div class="usage-header">
+                <span class="usage-title">Использование</span>
+                <span class="usage-badge badge-trial" id="overlayPlanBadge">TRIAL</span>
+            </div>
+            <div class="usage-bar">
+                <div class="usage-fill" id="overlayUsageFill" style="width: 0%"></div>
+            </div>
+            <div class="usage-text" id="overlayUsageText">0 из 100 джемов использовано</div>
+        </div>
+
+        <!-- Navigation Items -->
+        <div class="menu-divider"></div>
+        <div class="overlay-menu-section">
+            <button class="overlay-menu-item" data-module="settings">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" viewBox="0 0 24 24">
+                    <path d="M18 20a6 6 0 0 0-12 0" />
+                    <circle cx="12" cy="10" r="4" />
+                    <circle cx="12" cy="12" r="10" />
+                </svg>
+                <span>Настройки аккаунта</span>
+            </button>
+            <button class="overlay-menu-item" data-module="billing">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" viewBox="0 0 24 24">
+                    <path
+                        d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
+                </svg>
+                <span>Тарифы и оплата</span>
+            </button>
+            <button class="overlay-menu-item" data-module="invites">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" viewBox="0 0 24 24">
+                    <path d="m11 17 2 2a1 1 0 1 0 3-3" />
+                    <path
+                        d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4" />
+                    <path d="m21 3 1 11h-2" />
+                    <path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3" />
+                    <path d="M3 4h8" />
+                </svg>
+                <span>Партнерская программа</span>
+                <span class="menu-badge">NEW</span>
+            </button>
+            <button class="overlay-menu-item" data-module="orders">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" viewBox="0 0 24 24">
+                    <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+                    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+                    <path d="M12 11h4" />
+                    <path d="M12 16h4" />
+                    <path d="M8 11h.01" />
+                    <path d="M8 16h.01" />
+                </svg>
+                <span>Управление заказами</span>
+            </button>
+        </div>
+
+        <!-- Theme Toggle -->
+        <div class="overlay-menu-section">
+            <div class="overlay-menu-toggle">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" viewBox="0 0 24 24">
+                    <path d="M12 8a2.83 2.83 0 0 0 4 4 4 4 0 1 1-4-4" />
+                    <path d="M12 2v2" />
+                    <path d="M12 20v2" />
+                    <path d="m4.9 4.9 1.4 1.4" />
+                    <path d="m17.7 17.7 1.4 1.4" />
+                    <path d="M2 12h2" />
+                    <path d="M20 12h2" />
+                    <path d="m6.3 17.7-1.4 1.4" />
+                    <path d="m19.1 4.9-1.4 1.4" />
+                </svg>
+                <span>Тема</span>
+                <button class="theme-toggle-slider js-theme-toggle" onclick="toggleTheme(event)" role="switch"
+                    aria-checked="false" aria-label="Переключить тему">
+                    <span class="theme-toggle-track">
+                        <span class="theme-toggle-icon icon-dark">
+                            <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                            </svg>
+                        </span>
+                        <span class="theme-toggle-icon icon-light">
+                            <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="5" />
+                                <path
+                                    d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                            </svg>
+                        </span>
+                        <span class="theme-toggle-thumb"></span>
+                    </span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Help & Feedback -->
+        <div class="overlay-menu-section">
+            <button class="overlay-menu-item" data-module="help">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" viewBox="0 0 24 24">
+                    <path
+                        d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" />
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                    <path d="M12 17h.01" />
+                </svg>
+                <span>Помощь</span>
+            </button>
+            <button class="overlay-menu-item" data-module="feedback">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" viewBox="0 0 24 24">
+                    <path d="M22 10.5V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12.5" />
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                    <path d="M20 14v4" />
+                    <path d="M20 22v.01" />
+                </svg>
+                <span>Сообщить об ошибке</span>
+            </button>
+        </div>
+
+        <!-- Logout Button -->
+        <div class="overlay-menu-section">
+            <button class="overlay-menu-logout" onclick="logout()">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" viewBox="0 0 24 24">
+                    <path d="m16 17 5-5-5-5" />
+                    <path d="M21 12H9" />
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                </svg>
+                <span>Выйти</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- MODULE: SETTINGS -->
+    <div id="overlayModule_settings" class="overlay-module" style="display:none">
+        <div class="glass-content">
+            <div class="glass-header">
+                <h2>Настройки аккаунта</h2>
+                <p>Управление информацией профиля и API ключами</p>
+            </div>
+
+            <div class="glass-tabs">
+                <button class="glass-tab active" id="tabProfile" onclick="switchOverlayTab('profile')">Профиль</button>
+                <button class="glass-tab" id="tabSecurity" onclick="switchOverlayTab('security')">Безопасность</button>
+                <button class="glass-tab" id="tabNotifications"
+                    onclick="switchOverlayTab('notifications')">Уведомления</button>
+                <button class="glass-tab" id="tabApiKeys" onclick="switchOverlayTab('apikeys')">API Ключи</button>
+            </div>
+
+            <!-- Profile Section -->
+            <div id="overlayProfileSection"
+                style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+                <div class="settings-overlay-avatar-wrapper">
+                    <div class="settings-overlay-avatar" id="overlayAvatar"
+                        onclick="document.getElementById('avatarUpload').click()"
+                        style="cursor: pointer; background-size: cover; background-position: center;">P</div>
+                    <div class="avatar-upload-overlay" onclick="document.getElementById('avatarUpload').click()">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <span>Изменить</span>
+                    </div>
+                    <input type="file" id="avatarUpload" accept="image/*" style="display: none;"
+                        onchange="uploadAvatar(event)">
+                </div>
+
+                <div class="glass-card">
+                    <div class="glass-row">
+                        <div class="glass-icon">
+                            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                        </div>
+                        <div class="glass-info">
+                            <div class="glass-label">Имя пользователя</div>
+                            <div class="glass-value" id="overlayName">User Name</div>
+                        </div>
+                        <button class="glass-action-btn" onclick="editProfile('name')">Редактировать</button>
+                    </div>
+
+                    <div class="glass-row">
+                        <div class="glass-icon">
+                            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <div class="glass-info">
+                            <div class="glass-label">Электронная почта</div>
+                            <div class="glass-value" id="overlayEmail">user@example.com</div>
+                        </div>
+                        <button class="glass-action-btn" onclick="editProfile('email')">Редактировать</button>
+                    </div>
+
+                    <!-- PATCH (правка 4): статус оплаты и остаток запусков прямо в профиле -->
+                    <div class="glass-row">
+                        <div class="glass-icon">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                <rect x="2" y="5" width="20" height="14" rx="2" />
+                                <path d="M2 10h20" />
+                            </svg>
+                        </div>
+                        <div class="glass-info">
+                            <div class="glass-label">Тариф</div>
+                            <div class="glass-value" id="overlayPlan">Загружаем…</div>
+                        </div>
+                        <button class="glass-action-btn" onclick="window.OverlayManager && window.OverlayManager.open('pricing')">Тарифы</button>
+                    </div>
+
+                    <div class="glass-row">
+                        <div class="glass-icon">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                <path d="M12 20v-6M6 20v-4M18 20v-9" />
+                            </svg>
+                        </div>
+                        <div class="glass-info">
+                            <div class="glass-label">Осталось запусков</div>
+                            <div class="glass-value" id="overlayUsage">Загружаем…</div>
+                        </div>
+                        <button class="glass-action-btn" onclick="loadPlanStatus(true)">Обновить</button>
+                    </div>
+
+                    <div class="glass-row">
+                        <div class="glass-icon">
+                            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+                            </svg>
+                        </div>
+                        <div class="glass-info">
+                            <div class="glass-label">Метод входа</div>
+                            <div class="glass-value" id="overlayAuthMethod">Google</div>
+                        </div>
+                    </div>
+
+                    <div class="glass-row">
+                        <div class="glass-icon">
+                            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                            </svg>
+                        </div>
+                        <div class="glass-info">
+                            <div class="glass-label">Сбросить пароль</div>
+                        </div>
+                        <button class="glass-action-btn" onclick="resetPassword()">Редактировать</button>
+                    </div>
+                </div>
+
+                <div class="settings-overlay-marketing">
+                    <input type="checkbox" id="overlayMarketingCheck" checked>
+                    <label for="overlayMarketingCheck">Получать новости о продукте и специальные предложения</label>
+                </div>
+            </div>
+
+            <!-- Security Section -->
+            <div id="overlaySecuritySection"
+                style="width: 100%; display: none; flex-direction: column; align-items: center;">
+                <div class="glass-card">
+                    <div class="glass-row">
+                        <div class="glass-info" style="width: 100%;">
+                            <div class="glass-label">Активные сессии</div>
+                            <div class="session-item">
+                                <div class="session-left">
+                                    <div class="session-icon-small">💻</div>
+                                    <div class="session-text">
+                                        <div class="session-primary">Chrome на Windows</div>
+                                        <div class="session-secondary">Москва, Россия • <span class="now-badge"><span
+                                                    class="online-dot"></span>сейчас</span></div>
+                                    </div>
+                                </div>
+                                <div class="glass-badge badge-neutral">Текущий сеанс</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-row" style="justify-content: space-between;">
+                        <div class="glass-info">
+                            <div class="glass-label">Двухфакторная аутентификация</div>
+                            <div class="glass-value"
+                                style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                <span class="glass-badge badge-warning"
+                                    style="text-transform: none; font-weight: 500;">Отключена</span>
+                            </div>
+                            <div class="glass-subtext">Рекомендуем включить для дополнительной защиты аккаунта</div>
+                        </div>
+                        <button class="glass-btn-primary"
+                            onclick="showNotification('Функция 2FA будет доступна скоро', 'info')">Включить</button>
+                    </div>
+                </div>
+                <button class="glass-action-btn"
+                    style="margin-top: 24px; color: var(--text-3); font-size: 12px; background: transparent;"
+                    onclick="exportUserData()">Скачать мои данные (JSON)</button>
+            </div>
+
+            <!-- Notifications Section -->
+            <div id="overlayNotificationsSection"
+                style="width: 100%; display: none; flex-direction: column; align-items: center;">
+                <div class="glass-card">
+                    <div class="setting-notification-row">
+                        <div class="glass-icon">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <div class="setting-notification-text">
+                            <div class="glass-label">Email-уведомления</div>
+                            <div class="glass-value">Отчеты о генерации</div>
+                        </div>
+                        <input type="checkbox" checked class="custom-checkbox">
+                    </div>
+                    <div class="setting-notification-row">
+                        <div class="glass-icon">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                            </svg>
+                        </div>
+                        <div class="setting-notification-text">
+                            <div class="glass-label">Push-уведомления</div>
+                            <div class="glass-value">Новости и обновления</div>
+                        </div>
+                        <input type="checkbox" class="custom-checkbox">
+                    </div>
+                </div>
+
+                <!-- Notifications Empty State -->
+                <div class="empty-state-block" style="padding: 32px 24px;">
+                    <svg class="empty-state-block__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                        <line x1="12" y1="2" x2="12" y2="4" />
+                    </svg>
+                    <div class="empty-state-block__title">Всё чисто! 🎉</div>
+                    <div class="empty-state-block__subtitle">У вас нет новых уведомлений</div>
+                </div>
+            </div>
+
+            <!-- API Keys Section -->
+            <div id="overlayApiKeysSection"
+                style="width: 100%; display: none; flex-direction: column; align-items: center;">
+                <div class="glass-card">
+                    <div class="glass-row" style="align-items: flex-start; padding: 16px 24px;">
+                        <div class="glass-icon" style="margin-top: 22px;">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                            </svg>
+                        </div>
+                        <div class="glass-info" style="display: flex; flex-direction: column; width: 100%;">
+                            <div class="glass-label" style="margin-bottom: 6px;">OpenRouter API Key</div>
+                            <div style="display: flex; gap: 12px; width: 100%; align-items: center;">
+                                <input type="password" id="overlayOpenRouterKey"
+                                    style="flex: 1; height: 42px; background: var(--surface-2); padding: 0 14px; border-radius: 10px; border: 1px solid var(--border); color: var(--text); box-sizing: border-box;"
+                                    placeholder="sk-or-v1-...">
+                                <button class="glass-action-btn" style="height: 42px; white-space: nowrap; margin: 0;"
+                                    onclick="saveApiKeyOverlay()">Сохранить</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Danger Zone -->
+            <div id="dangerZoneSection" class="danger-zone" style="display: none;">
+                <button class="btn-danger-outline" onclick="deleteAccount()">Удалить аккаунт</button>
+            </div>
+
+            <div class="settings-overlay-footer">
+                <a href="#" class="footer-link"
+                    onclick="showNotification('Условия использования будут доступны позже', 'info'); return false;">Условия
+                    использования</a>
+                <a href="#" class="footer-link"
+                    onclick="showNotification('Политика конфиденциальности будет доступна позже', 'info'); return false;">Политика
+                    конфиденциальности</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODULE: BILLING -->
+    <div id="overlayModule_billing" class="overlay-module" style="display:none">
+        <div class="glass-content glass-content-wide">
+            <div class="glass-header">
+                <h2>Тарифы и оплата</h2>
+                <p>Выберите подходящий план для ваших творческих задач</p>
+            </div>
+
+            <!-- Pricing Toggle -->
+            <div class="pricing-toggle-platform">
+                <button class="pricing-toggle-platform-btn" data-period="month">Помесячно</button>
+                <button class="pricing-toggle-platform-btn active" data-period="year">Годовой <span
+                        class="pricing-toggle-platform-badge">−20%</span></button>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- Trial -->
+                <div class="pricing-card">
+                    <div class="card-header">
+                        <h2>Trial</h2>
+                        <p class="card-description">Попробуйте платформу без вложений</p>
+                    </div>
+                    <div class="card-price">
+                        <span class="price price-month-p" style="display:none">0 ₽</span>
+                        <span class="price price-year-p">0 ₽</span>
+                        <span class="period">/ мес</span>
+                    </div>
+                    <ul class="features-list">
+                        <li>1 стратегия</li>
+                        <li>Креативы + раскадровка</li>
+                        <li>Анализ конкурентов и ЦА</li>
+                        <li>Медиаплан и бюджет</li>
+                        <li>ИИ-продюсер (чат с отчётом)</li>
+                    </ul>
+                    <button class="btn-pricing btn-outline" onclick="handlePricingClick('trial')">Попробовать
+                        бесплатно</button>
+                </div>
+
+                <!-- START -->
+                <div class="pricing-card">
+                    <div class="card-header">
+                        <h2>START</h2>
+                        <p class="card-description">Для фрилансеров, стартапов и небольших команд</p>
+                    </div>
+                    <div class="card-price">
+                        <span class="price-old-p" style="display:inline">4 900 ₽</span>
+                        <span class="price price-month-p" style="display:none">4 900 ₽</span>
+                        <span class="price price-year-p">3 900 ₽</span>
+                        <span class="period">/ мес</span>
+                    </div>
+                    <ul class="features-list">
+                        <li>5 стратегий в месяц</li>
+                        <li>Креативы + раскадровка</li>
+                        <li>Анализ конкурентов и ЦА</li>
+                        <li>Медиаплан и бюджет</li>
+                        <li>ИИ-продюсер (чат с отчётом)</li>
+                        <li>Редактирование прямо в отчёте</li>
+                        <li>Экспорт результатов</li>
+                    </ul>
+                    <button class="btn-pricing btn-outline" data-plan="start"
+                        onclick="handlePricingClick('start')">Оформить Start</button>
+                </div>
+
+                <!-- PRO -->
+                <div class="pricing-card featured">
+                    <span class="best-choice-badge">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+                                fill="currentColor" />
+                        </svg>
+                        Лучший выбор
+                    </span>
+                    <div class="card-header">
+                        <h2>PRO</h2>
+                        <p class="card-description">Для агентств и отделов маркетинга</p>
+                    </div>
+                    <div class="card-price">
+                        <span class="price-old-p" style="display:inline">19 900 ₽</span>
+                        <span class="price price-month-p" style="display:none">19 900 ₽</span>
+                        <span class="price price-year-p">15 900 ₽</span>
+                        <span class="period">/ мес</span>
+                    </div>
+                    <ul class="features-list">
+                        <li>Всё, что в Start</li>
+                        <li>20 стратегий в месяц</li>
+                        <li>Углублённая аналитика</li>
+                        <li>Продвинутые нейросети и Deep Research</li>
+                        <li>До 5 пользователей</li>
+                        <li>Приоритетная поддержка</li>
+                    </ul>
+                    <button class="btn-pricing btn-primary" data-plan="pro" onclick="handlePricingClick('pro')">Оформить
+                        Pro</button>
+                </div>
+
+                <!-- Enterprise -->
+                <div class="pricing-card">
+                    <div class="card-header">
+                        <h2>Enterprise</h2>
+                        <p class="card-description">Для крупных брендов с потребностью в кастомизации</p>
+                    </div>
+                    <div class="card-price">
+                        <span class="price price-custom">По запросу</span>
+                    </div>
+                    <ul class="features-list">
+                        <li>Всё, что в тарифе PRO</li>
+                        <li>API доступ</li>
+                        <li>White Label отчёты</li>
+                        <li>Персональный менеджер</li>
+                        <li>Обучение команды</li>
+                        <li>SLA гарантии</li>
+                    </ul>
+                    <button class="btn-pricing btn-outline">Связаться</button>
+                </div>
+            </div>
+
+            <script>
+                (function () {
+                    var btns = document.querySelectorAll('.pricing-toggle-platform-btn');
+                    var monthP = document.querySelectorAll('.price-month-p');
+                    var yearP = document.querySelectorAll('.price-year-p');
+                    var oldP = document.querySelectorAll('.price-old-p');
+                    btns.forEach(function (btn) {
+                        btn.addEventListener('click', function () {
+                            btns.forEach(function (b) { b.classList.remove('active'); });
+                            btn.classList.add('active');
+                            var isYear = btn.dataset.period === 'year';
+                            monthP.forEach(function (el) { el.style.display = isYear ? 'none' : ''; });
+                            yearP.forEach(function (el) { el.style.display = isYear ? '' : 'none'; });
+                            oldP.forEach(function (el) { el.style.display = isYear ? 'inline' : 'none'; });
+                        });
+                    });
+                })();
+            </script>
+
+            <script>
+                // Определяем текущий период (month/year)
+                function getCurrentPeriod() {
+                    var activeBtn = document.querySelector('.pricing-toggle-platform-btn.active');
+                    return activeBtn ? activeBtn.dataset.period : 'month';
+                }
+
+                // Обработка нажатия на кнопку тарифа
+                async function handlePricingClick(plan) {
+                    // Trial — просто закрываем оверлей
+                    if (plan === 'trial') {
+                        if (typeof showNotification === 'function') {
+                            showNotification('Вы уже на бесплатном тарифе Trial', 'info');
+                        }
+                        return;
+                    }
+
+                    var token = localStorage.getItem('authToken');
+                    if (!token) {
+                        if (typeof showNotification === 'function') {
+                            showNotification('Необходимо войти в аккаунт', 'warning');
+                        }
+                        return;
+                    }
+
+                    var period = getCurrentPeriod();
+                    var btn = event.target.closest('.btn-pricing');
+                    var originalText = btn.textContent;
+                    btn.textContent = 'Обработка...';
+                    btn.disabled = true;
+
+                    try {
+                        var response = await fetch('/api/payments/create', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Bearer ' + token
+                            },
+                            body: JSON.stringify({ plan: plan, period: period })
+                        });
+
+                        var data = await response.json();
+
+                        if (!response.ok) {
+                            throw new Error(data.error || 'Ошибка оплаты');
+                        }
+
+                        if (data.testMode) {
+                            // Тестовый режим — сразу активируем
+                            if (typeof showNotification === 'function') {
+                                showNotification('✅ ' + data.message, 'success');
+                            }
+                            // Обновляем UI если есть функция
+                            if (typeof loadUserProfile === 'function') {
+                                loadUserProfile();
+                            }
+                        } else if (data.redirectUrl) {
+                            // Сохраняем ID платежа перед редиректом
+                            localStorage.setItem('pendingPaymentId', data.paymentId);
+                            // Редирект на страницу ЮKassa
+                            window.location.href = data.redirectUrl;
+                            return;
+                        }
+                    } catch (err) {
+                        console.error('Payment error:', err);
+                        if (typeof showNotification === 'function') {
+                            showNotification('❌ ' + err.message, 'error');
+                        }
+                    } finally {
+                        btn.textContent = originalText;
+                        btn.disabled = false;
+                    }
+                }
+
+                // ══════════════════════════════════════════
+                // Проверка статуса платежа при возврате с ЮKassa
+                // ══════════════════════════════════════════
+                async function checkReturnPayment() {
+                    var params = new URLSearchParams(window.location.search);
+                    var paymentId = params.get('payment_id') || localStorage.getItem('pendingPaymentId');
+
+                    if (!paymentId) return;
+
+                    var token = localStorage.getItem('authToken');
+                    if (!token) return;
+
+                    // Очищаем URL от параметров и localStorage
+                    if (params.has('payment_id')) {
+                        var cleanUrl = window.location.origin + window.location.pathname + window.location.hash;
+                        window.history.replaceState({}, '', cleanUrl);
+                    }
+                    localStorage.removeItem('pendingPaymentId');
+
+                    console.log('🔄 Проверяем статус платежа #' + paymentId);
+
+                    if (typeof showNotification === 'function') {
+                        showNotification('⏳ Проверяем статус оплаты...', 'info');
+                    }
+
+                    // Проверяем статус с интервалом (ЮKassa может чуть задержать confirmation)
+                    var maxAttempts = 10;
+                    var attempt = 0;
+
+                    async function pollStatus() {
+                        attempt++;
+                        try {
+                            var response = await fetch('/api/payments/status/' + paymentId, {
+                                headers: { 'Authorization': 'Bearer ' + token }
+                            });
+
+                            if (!response.ok) {
+                                throw new Error('Ошибка проверки');
+                            }
+
+                            var data = await response.json();
+                            console.log('📋 Статус платежа:', data.status, '(попытка ' + attempt + ')');
+
+                            if (data.status === 'succeeded') {
+                                if (typeof showNotification === 'function') {
+                                    showNotification('🎉 Оплата прошла! Тариф ' + data.plan.toUpperCase() + ' активирован', 'success');
+                                }
+                                if (typeof fetchCurrentPlan === 'function') {
+                                    fetchCurrentPlan();
+                                }
+                                return;
+                            }
+
+                            if (data.status === 'canceled') {
+                                if (typeof showNotification === 'function') {
+                                    showNotification('❌ Оплата отменена', 'error');
+                                }
+                                return;
+                            }
+
+                            // Ещё pending — ждём
+                            if (attempt < maxAttempts) {
+                                setTimeout(pollStatus, 3000);
+                            } else {
+                                if (typeof showNotification === 'function') {
+                                    showNotification('⏳ Оплата обрабатывается. Статус обновится автоматически.', 'info');
+                                }
+                            }
+                        } catch (err) {
+                            console.error('Poll error:', err);
+                            if (attempt < maxAttempts) {
+                                setTimeout(pollStatus, 3000);
+                            }
+                        }
+                    }
+
+                    pollStatus();
+                }
+
+                // Запускаем проверку при загрузке страницы
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', checkReturnPayment);
+                } else {
+                    checkReturnPayment();
+                }
+            </script>
+
+            <div class="settings-overlay-footer">
+                <a href="#" class="footer-link"
+                    onclick="showNotification('Условия использования будут доступны позже', 'info'); return false;">Условия
+                    использования</a>
+                <a href="#" class="footer-link"
+                    onclick="showNotification('Политика конфиденциальности будет доступна позже', 'info'); return false;">Политика
+                    конфиденциальности</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODULE: HELP -->
+    <div id="overlayModule_help" class="overlay-module" style="display:none">
+        <div class="glass-content">
+            <div class="glass-header">
+                <h2>Помощь</h2>
+                <p>База знаний и часто задаваемые вопросы</p>
+            </div>
+
+            <!-- Search -->
+            <div class="help-search-container">
+                <svg class="help-search-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input type="text" id="helpSearchInput" class="glass-input-search"
+                    placeholder="Найти ответ... (например: тарифы)">
+            </div>
+
+            <!-- Quick Start -->
+            <div class="glass-label" style="align-self: flex-start; margin-bottom: 12px; margin-left: 4px;">Быстрый
+                старт</div>
+            <div class="quick-start-grid">
+                <div class="start-card">
+                    <div class="step-badge">1</div>
+                    <h4>Новый проект</h4>
+                    <p>Нажмите кнопку в меню и введите название бренда</p>
+                </div>
+                <div class="start-card">
+                    <div class="step-badge">2</div>
+                    <h4>Настройка</h4>
+                    <p>Вставьте ссылку на сайт или соцсети для анализа</p>
+                </div>
+                <div class="start-card">
+                    <div class="step-badge">3</div>
+                    <h4>Результат</h4>
+                    <p>Получите готовую стратегию в разделе Проекты</p>
+                </div>
+            </div>
+
+            <!-- FAQ -->
+            <div class="glass-label" style="align-self: flex-start; margin: 24px 0 12px 4px;">База знаний</div>
+            <div class="glass-card" style="padding: 0;">
+                <div id="faqContainer">
+                    <!-- FAQ items rendered by help.js -->
+                    <div style="padding: 24px; text-align: center; color: var(--text-3);">Загрузка...</div>
+                </div>
+            </div>
+
+            <!-- Support -->
+            <div class="glass-card"
+                style="margin-top: 24px; text-align: center; padding: 24px; background: rgba(242, 92, 0, 0.05); border-color: rgba(242, 92, 0, 0.1);">
+                <p style="margin-bottom: 16px; color: var(--text-2); font-weight: 500;">Не нашли ответ на свой вопрос?
+                </p>
+                <div style="display: flex; gap: 12px; justify-content: center;">
+                    <button class="glass-action-btn"
+                        onclick="window.location.href='mailto:support@creativejam.ru'">Написать
+                        на почту</button>
+                    <button class="glass-action-btn" style="color: #229ED9;"
+                        onclick="window.open('https://t.me/support_creativejam', '_blank')">Telegram</button>
+                </div>
+            </div>
+
+            <div style="height: 40px;"></div>
+        </div>
+    </div>
+
+    <!-- MODULE: FEEDBACK -->
+    <div id="overlayModule_feedback" class="overlay-module" style="display:none">
+        <div class="glass-content">
+            <div class="glass-header">
+                <h2>Сообщить об ошибке</h2>
+                <p>Мы ценим вашу помощь в улучшении продукта</p>
+            </div>
+            <div class="glass-card bug-report-form">
+                <div class="form-group">
+                    <label class="form-label">Что случилось?</label>
+                    <input type="text" id="bugTitle" class="glass-input" placeholder="Кратко опишите проблему">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Шаги воспроизведения</label>
+                    <textarea id="bugSteps" class="glass-input" rows="3" placeholder="1. Нажал туда...
+2. Увидел то..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Ожидал / Получил</label>
+                    <textarea id="bugExpected" class="glass-input" rows="2"
+                        placeholder="Ожидал: откроется окно. Получил: белый экран."></textarea>
+                </div>
+
+                <div class="form-group file-upload-group">
+                    <label class="file-upload-label">
+                        <input type="file" id="bugScreenshot" accept="image/*" hidden
+                            onchange="document.getElementById('fileName').textContent = this.files[0]?.name || ''">
+                        <span class="upload-btn">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                            </svg>
+                            <span class="upload-btn-text">Прикрепить скриншот (опционально)</span>
+                        </span>
+                        <span id="fileName" class="file-name"></span>
+                    </label>
+                </div>
+
+
+
+                <div class="form-actions">
+                    <button class="glass-action-btn ghost" onclick="OverlayManager.close()">Отмена</button>
+                    <button class="glass-action-btn primary" onclick="submitBugReport()">Отправить отчет</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODULE: ORDERS PLACEHOLDER -->
+    <div id="overlayModule_orders" class="overlay-module" style="display:none">
+        <div class="glass-content">
+            <div class="glass-header">
+                <h2>Заказы</h2>
+                <p>История ваших генераций и заказов</p>
+            </div>
+            <div class="glass-card">
+                <div style="padding: 40px; text-align: center; color: var(--text-2);">
+                    История заказов пуста
+                    <br><br>
+                    <button class="glass-action-btn" onclick="OverlayManager.close()">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODULE: PARTNER PROGRAM -->
+    <div id="overlayModule_invites" class="overlay-module" style="display:none">
+        <div class="glass-content">
+            <div class="glass-header">
+                <h2>Партнёрская программа</h2>
+                <p>Приглашайте партнёров — зарабатывайте бонусы вместе</p>
+            </div>
+
+            <!-- Quick Start: how it works -->
+            <div class="glass-label" style="align-self: flex-start; margin-bottom: 12px; margin-left: 4px;">Как это
+                работает</div>
+            <div class="quick-start-grid">
+                <div class="start-card">
+                    <div class="step-badge">1</div>
+                    <h4>Поделитесь ссылкой</h4>
+                    <p>Скопируйте персональную ссылку или поделитесь через мессенджер</p>
+                </div>
+                <div class="start-card">
+                    <div class="step-badge">2</div>
+                    <h4>Партнёр регистрируется</h4>
+                    <p>Ваш знакомый переходит по ссылке и создаёт аккаунт</p>
+                </div>
+                <div class="start-card">
+                    <div class="step-badge">3</div>
+                    <h4>Вы получаете бонус</h4>
+                    <p>После активации аккаунта партнёра вам начисляются джемы</p>
+                </div>
+            </div>
+
+            <!-- Referral Link -->
+            <div class="glass-label" style="align-self: flex-start; margin: 24px 0 12px 4px;">Ваша ссылка</div>
+            <div class="glass-card" style="padding: 20px;">
+                <div class="pp-link-row">
+                    <input type="text" id="ppRefLink" class="pp-link-input" readonly
+                        value="https://app.creativejam.ru/join?ref=..." aria-label="Реферальная ссылка">
+                    <button id="ppCopyBtn" class="pp-btn pp-btn--primary" onclick="copyInviteLink()"
+                        aria-label="Скопировать ссылку">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <rect x="9" y="9" width="13" height="13" rx="2" />
+                            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                        </svg>
+                        Скопировать
+                    </button>
+                </div>
+                <div class="pp-share-row" style="margin-top: 14px;">
+                    <span class="pp-share-label">Поделиться:</span>
+                    <button class="pp-share-btn pp-share-btn--tg" onclick="ppShareVia('telegram')"
+                        aria-label="Telegram">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M11.944 0A12 12 0 1 0 24 12.056A12.014 12.014 0 0 0 11.944 0Zm5.654 8.206l-1.58 7.45c-.12.54-.43.67-.87.42l-2.4-1.77l-1.16 1.12a.6.6 0 0 1-.48.24l.17-2.44 4.44-4.01c.19-.17-.04-.27-.3-.1l-5.5 3.46l-2.36-.74c-.51-.16-.52-.51.11-.76l9.23-3.56c.43-.15.8.1.66.74Z" />
+                        </svg>
+                        Telegram
+                    </button>
+                    <button class="pp-share-btn pp-share-btn--wa" onclick="ppShareVia('whatsapp')"
+                        aria-label="WhatsApp">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                        </svg>
+                        WhatsApp
+                    </button>
+                    <button class="pp-share-btn pp-share-btn--email" onclick="ppShareVia('email')" aria-label="Email">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        Email
+                    </button>
+                </div>
+            </div>
+
+            <!-- Email invite -->
+            <div class="glass-card" style="padding: 20px;">
+                <div class="pp-email-row">
+                    <input type="email" id="ppInviteEmail" class="pp-input" placeholder="partner@company.com"
+                        aria-label="Email партнёра">
+                    <button id="ppSendBtn" class="pp-btn pp-btn--primary" onclick="sendInvite()">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+                        </svg>
+                        Отправить
+                    </button>
+                </div>
+                <p class="pp-hint" id="ppEmailHint">Мы отправим письмо с вашей ссылкой</p>
+            </div>
+
+            <!-- Progress stats -->
+            <div class="glass-label" style="align-self: flex-start; margin: 24px 0 12px 4px;">Ваш прогресс</div>
+            <div class="glass-card" style="padding: 20px;">
+                <div class="pp-counters">
+                    <div class="pp-counter">
+                        <span class="pp-counter__value" id="ppStatVisits">0</span>
+                        <span class="pp-counter__label">Переходов</span>
+                    </div>
+                    <div class="pp-counter">
+                        <span class="pp-counter__value" id="ppStatSignups">0</span>
+                        <span class="pp-counter__label">Регистраций</span>
+                    </div>
+                    <div class="pp-counter">
+                        <span class="pp-counter__value pp-counter__value--accent" id="ppStatActivated">0</span>
+                        <span class="pp-counter__label">Активаций</span>
+                    </div>
+                </div>
+
+                <div class="pp-progress">
+                    <div class="pp-progress__track">
+                        <div class="pp-progress__fill" id="ppProgressFill"></div>
+                    </div>
+                    <span class="pp-progress__label" id="ppProgressLabel">0 из 5 до бонуса</span>
+                </div>
+
+                <!-- Invites list -->
+                <div id="ppInvitesList" class="pp-invites-list"></div>
+
+                <!-- Empty state -->
+                <div id="ppEmptyState" class="pp-empty" style="display:none">
+                    <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+                        style="opacity:.4">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <p>Пока нет приглашений</p>
+                    <button class="pp-btn pp-btn--secondary" onclick="copyInviteLink()">Скопировать
+                        ссылку</button>
+                </div>
+            </div>
+
+            <!-- Bonuses -->
+            <div class="glass-label" style="align-self: flex-start; margin: 24px 0 12px 4px;">Бонусы</div>
+            <div class="glass-card" style="padding: 20px;">
+                <div class="pp-bonus-item">
+                    <span class="pp-bonus-value">+100 джемов</span>
+                    <span class="pp-bonus-desc">за каждого активированного партнёра</span>
+                </div>
+                <div class="pp-bonus-item">
+                    <span class="pp-bonus-value">+50 джемов</span>
+                    <span class="pp-bonus-desc">за регистрацию партнёра</span>
+                </div>
+                <span class="pp-badge">Скоро</span>
+                <p class="pp-bonus-note">Начисления появятся после запуска программы. Приглашения уже
+                    засчитываются.</p>
+            </div>
+
+            <!-- FAQ -->
+            <div class="glass-label" style="align-self: flex-start; margin: 24px 0 12px 4px;">Частые вопросы</div>
+            <div class="glass-card" style="padding: 0;">
+                <div class="pp-faq-list">
+                    <div class="pp-faq-item" data-idx="0">
+                        <button class="pp-faq-q" onclick="ppToggleFaq(0)">Когда начисляются бонусы?</button>
+                        <div class="pp-faq-a">Бонусы начисляются автоматически после того, как приглашённый
+                            партнёр активирует аккаунт и совершит первое действие в системе.</div>
+                    </div>
+                    <div class="pp-faq-item" data-idx="1">
+                        <button class="pp-faq-q" onclick="ppToggleFaq(1)">Что считается «активацией»?</button>
+                        <div class="pp-faq-a">Активация — это регистрация + создание первого проекта или
+                            генерация первого контента.</div>
+                    </div>
+                    <div class="pp-faq-item" data-idx="2">
+                        <button class="pp-faq-q" onclick="ppToggleFaq(2)">Можно ли приглашать себя?</button>
+                        <div class="pp-faq-a">Нет, система отслеживает совпадения по email-адресам и
+                            устройствам. Самоприглашения не засчитываются.</div>
+                    </div>
+                    <div class="pp-faq-item" data-idx="3">
+                        <button class="pp-faq-q" onclick="ppToggleFaq(3)">Где посмотреть статус приглашения?</button>
+                        <div class="pp-faq-a">Актуальный статус каждого приглашения отображается в разделе «Ваш
+                            прогресс» на этой странице.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rules button -->
+            <div class="glass-card"
+                style="margin-top: 8px; text-align: center; padding: 20px; background: rgba(242, 92, 0, 0.05); border-color: rgba(242, 92, 0, 0.1);">
+                <p style="margin-bottom: 14px; color: var(--text-2); font-weight: 500;">Подробные условия участия</p>
+                <button class="glass-action-btn" onclick="ppOpenRules()">Правила программы</button>
+            </div>
+
+            <div style="height: 40px;"></div>
+        </div><!-- /glass-content -->
+
+        <!-- ── Rules Modal ── -->
+        <div id="ppRulesModal" class="pp-modal" aria-hidden="true" role="dialog" aria-modal="true"
+            aria-label="Правила партнёрской программы">
+            <div class="pp-modal__backdrop" onclick="ppCloseRules()"></div>
+            <div class="pp-modal__body">
+                <div class="pp-modal__header">
+                    <h3>Правила партнёрской программы</h3>
+                    <button class="pp-modal__close" onclick="ppCloseRules()" aria-label="Закрыть">×</button>
+                </div>
+                <div class="pp-modal__content">
+                    <ol class="pp-rules-list">
+                        <li>Партнёрская программа доступна всем зарегистрированным пользователям Creative Jam.</li>
+                        <li>Каждый пользователь получает уникальную реферальную ссылку.</li>
+                        <li>Бонусы начисляются после активации аккаунта приглашённого пользователя.</li>
+                        <li>Активация — это регистрация + создание первого проекта.</li>
+                        <li>Самоприглашения и мультиаккаунты не допускаются.</li>
+                        <li>Creative Jam оставляет за собой право изменять условия программы.</li>
+                        <li>Накопленные бонусы можно использовать для оплаты подписки и дополнительных генераций.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    </body>
+
+    </html>

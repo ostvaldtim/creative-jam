@@ -1,0 +1,255 @@
+﻿/* ═══════════════════════════════════════════════════════
+   AURA Notification System
+   Premium glassmorphism toasts with SVG icons
+   ═══════════════════════════════════════════════════════ */
+
+/* Container — stacks notifications top-right */
+#notification-container {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 10000;
+    pointer-events: none;
+    max-width: 420px;
+    width: 100%;
+}
+
+/* ── Base notification ── */
+.notification {
+    position: relative;
+    transform: translateX(120%);
+    opacity: 0;
+    padding: 14px 40px 14px 16px;
+    background: var(--surface, rgba(30, 32, 44, 0.92));
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+    border-radius: 14px;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.45;
+    color: var(--text, #e8e8e8);
+    min-width: 280px;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.35),
+        0 2px 8px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    pointer-events: auto;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    overflow: hidden;
+    cursor: default;
+}
+
+.notification.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+/* ── Left accent stripe ── */
+.notification-accent {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    border-radius: 14px 0 0 14px;
+}
+
+/* ── Icon container ── */
+.notification-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+}
+
+.notification-icon svg {
+    display: block;
+}
+
+/* ── Message text ── */
+.notification-message {
+    flex: 1;
+    min-width: 0;
+    word-break: break-word;
+}
+
+/* ── Close button ── */
+.notification-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    color: var(--text-3, #888);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.15s, background 0.15s;
+    opacity: 0;
+}
+
+.notification:hover .notification-close {
+    opacity: 1;
+}
+
+.notification-close:hover {
+    color: var(--text, #e8e8e8);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* ── Progress bar (auto-dismiss timer) ── */
+.notification-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: transparent;
+    border-radius: 0 0 14px 14px;
+    overflow: hidden;
+}
+
+.notification-progress-bar {
+    height: 100%;
+    width: 100%;
+    transform-origin: left;
+    animation: notif-progress 4s linear forwards;
+    border-radius: 0 0 14px 14px;
+}
+
+@keyframes notif-progress {
+    from {
+        transform: scaleX(1);
+    }
+
+    to {
+        transform: scaleX(0);
+    }
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   TYPE VARIANTS
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Success ── */
+.notification-success {
+    border-color: rgba(34, 197, 94, 0.2);
+}
+
+.notification-success .notification-accent {
+    background: rgb(34, 197, 94);
+}
+
+.notification-success .notification-icon {
+    color: rgb(34, 197, 94);
+    background: rgba(34, 197, 94, 0.1);
+}
+
+.notification-success .notification-progress-bar {
+    background: rgba(34, 197, 94, 0.5);
+}
+
+
+/* ── Error ── */
+.notification-error {
+    border-color: rgba(239, 68, 68, 0.2);
+}
+
+.notification-error .notification-accent {
+    background: rgb(239, 68, 68);
+}
+
+.notification-error .notification-icon {
+    color: rgb(239, 68, 68);
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.notification-error .notification-progress-bar {
+    background: rgba(239, 68, 68, 0.5);
+}
+
+
+/* ── Warning ── */
+.notification-warning {
+    border-color: rgba(255, 138, 60, 0.2);
+}
+
+.notification-warning .notification-accent {
+    background: var(--orange, rgb(255, 138, 60));
+}
+
+.notification-warning .notification-icon {
+    color: var(--orange, rgb(255, 138, 60));
+    background: rgba(255, 138, 60, 0.1);
+}
+
+.notification-warning .notification-progress-bar {
+    background: rgba(255, 138, 60, 0.5);
+}
+
+
+/* ── Info ── */
+.notification-info {
+    border-color: rgba(99, 140, 255, 0.2);
+}
+
+.notification-info .notification-accent {
+    background: rgb(99, 140, 255);
+}
+
+.notification-info .notification-icon {
+    color: rgb(99, 140, 255);
+    background: rgba(99, 140, 255, 0.1);
+}
+
+.notification-info .notification-progress-bar {
+    background: rgba(99, 140, 255, 0.5);
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   FIELD ERROR (inline under inputs)
+   ═══════════════════════════════════════════════════════ */
+.field-error {
+    color: rgb(239, 68, 68);
+    font-size: 12px;
+    margin-top: 6px;
+    display: block;
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+    #notification-container {
+        top: 12px;
+        right: 12px;
+        left: 12px;
+        max-width: none;
+    }
+
+    .notification {
+        min-width: 0;
+        font-size: 12px;
+        padding: 12px 36px 12px 14px;
+    }
+
+    .notification-close {
+        opacity: 1;
+    }
+}

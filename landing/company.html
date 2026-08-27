@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>О компании – Creative Jam</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <!-- TODO: заменить на полный URL после покупки домена -->
+    <link rel="canonical" href="/company">
+    <meta name="description"
+        content="Creative Jam – AI-платформа нового поколения. Наша миссия: сделать data-driven маркетинг доступным каждому бизнесу." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="О компании – Creative Jam" />
+    <meta property="og:description" content="Наша миссия: сделать data-driven маркетинг доступным каждому бизнесу." />
+    <meta property="og:image" content="/images/og-image.png" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="/images/og-image.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="auth-modal.css" />
+    <style>
+        /* Hero entrance animation – hides elements before first paint */
+        @keyframes heroFadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        .page-hero .page-hero-title {
+            opacity: 0;
+            animation: heroFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+        }
+
+        .page-hero .page-hero-sub {
+            opacity: 0;
+            animation: heroFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <div class="page-bg" aria-hidden="true">
+        <div class="page-bg-gradient"></div>
+        <div class="page-bg-noise"></div>
+        <div class="page-bg-grid"></div>
+        <div class="page-bg-orbs">
+            <div class="page-orb orb-1"></div>
+            <div class="page-orb orb-2"></div>
+            <div class="page-orb orb-3"></div>
+            <div class="page-orb orb-4"></div>
+        </div>
+    </div>
+
+    <!-- ============ NAVBAR ============ -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html#hero" class="navbar-logo">Creative <span>Jam</span></a>
+            <div class="navbar-links">
+                <div class="nav-item"><a href="cases.html" class="nav-link">Кейсы</a></div>
+                <div class="nav-item"><a href="company.html" class="nav-link">О нас</a></div>
+            </div>
+            <div class="navbar-actions">
+                <button class="btn btn-ghost btn-hidden-sm" data-auth-action="login">Войти</button>
+                <button class="btn btn-primary" data-auth-action="trial">Попробовать бесплатно</button>
+                <button class="nav-burger" id="navBurger"
+                    aria-label="Открыть меню"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+        <div class="nav-mobile" id="navMobile">
+            <div class="nav-mobile-inner">
+                <a href="cases.html" class="nav-mobile-link">Кейсы</a>
+
+                <a href="company.html" class="nav-mobile-link">О нас</a>
+                <div class="nav-mobile-actions"><button class="btn btn-ghost" style="width:100%"
+                        data-auth-action="login">Войти</button><button class="btn btn-primary" style="width:100%"
+                        data-auth-action="trial">Попробовать бесплатно</button></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============ MISSION HERO ============ -->
+    <section class="page-hero" style="padding:10rem 0 4rem">
+        <div class="page-hero-bg"></div>
+        <div class="container">
+            <div class="page-hero-content" style="max-width:800px">
+                <h1 class="page-hero-title">
+                    Тестировать <span class="accent">гипотезы</span><span style="font-size:0.6em">,</span><br>
+                    а не <span class="accent">бюджеты</span>
+                </h1>
+                <p class="page-hero-sub" style="max-width:520px;margin:1.5rem auto 0">
+                    Мы создаём инструменты, которые дают малому и среднему бизнесу доступ к аналитике
+                    и стратегиям уровня топ-агентств.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ STATS ============ -->
+    <section class="section" style="padding-top:0">
+        <div class="container">
+            <div class="company-stats">
+                <div class="company-stat">
+                    <div class="company-stat-num">1 500+</div>
+                    <div class="company-stat-label">Кейсов в базе AI</div>
+                </div>
+                <div class="company-stat">
+                    <div class="company-stat-num">312%</div>
+                    <div class="company-stat-label">Средний рост ROI</div>
+                </div>
+                <div class="company-stat">
+                    <div class="company-stat-num">20 мин</div>
+                    <div class="company-stat-label">До первой стратегии</div>
+                </div>
+                <div class="company-stat">
+                    <div class="company-stat-num">100%</div>
+                    <div class="company-stat-label">Избавление от рутины</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ VISION ============ -->
+    <section class="section" style="padding-top:2rem">
+        <div class="container" style="max-width:800px">
+
+            <h2 class="section-title" style="text-align:center;margin-bottom:2rem">
+                В Creative <span class="accent">Jam</span> мы закрываем разрыв между <span class="accent">данными</span>
+                и <span class="accent">креативом</span>
+            </h2>
+            <p class="company-vision-text"
+                style="color:var(--muted-foreground);text-align:center;font-size:1.35rem;font-weight:300;line-height:1.8;max-width:640px;margin:0 auto">
+                Маркетинг – это не только про бюджеты и таблицы. Это про истории, которые цепляют.
+                Мы соединяем аналитику тысяч реальных кампаний с генеративным AI, чтобы каждый бизнес
+                мог создавать стратегии, которые работают – быстро, точно и без агентства.
+            </p>
+        </div>
+    </section>
+
+    <!-- ============ VALUES ============ -->
+    <section class="section">
+        <div class="container">
+            <div style="text-align:center;margin-bottom:3rem">
+                <h2 class="section-title" style="margin-top:1rem">Что вы <span class="accent">получаете</span></h2>
+            </div>
+            <div class="company-values-grid">
+                <div class="company-value-card">
+                    <div class="company-value-icon"><img src="images/icon-rocket.png" alt="Ускорение"
+                            style="width:2.5rem;height:2.5rem;filter:invert(1)"></div>
+                    <h3 class="company-value-title">Ускорение в 50 раз</h3>
+                    <p class="company-value-desc">Машинное время против человеческого фактора. Проходим путь от брифа до
+                        готовой стратегии за 20 минут. Вы запускаетесь, пока тренд актуален, а не через месяц после
+                        него.</p>
+                </div>
+                <div class="company-value-card">
+                    <div class="company-value-icon"><img src="images/icon-shield.png" alt="Защита"
+                            style="width:2.5rem;height:2.5rem;filter:invert(1)"></div>
+                    <h3 class="company-value-title">Защита от ошибок до запуска</h3>
+                    <p class="company-value-desc">80% компаний ошибаются в расчёте окупаемости. Платформа даёт прогноз
+                        ROI до запуска рекламы на основе 1 500 реальных кейсов. Вы тестируете гипотезы платформой, а не
+                        своими деньгами.</p>
+                </div>
+                <div class="company-value-card">
+                    <div class="company-value-icon"><img src="images/icon-ruler.png" alt="Архитектура"
+                            style="width:2.5rem;height:2.5rem;filter:invert(1)"></div>
+                    <h3 class="company-value-title">Архитектура топ-агентств</h3>
+                    <p class="company-value-desc">Качество работы международных сетей без найма штата за 500 000 ₽.
+                        Аналитика и логика опираются на методологии BBDO и фреймворки McKinsey.</p>
+                </div>
+                <div class="company-value-card">
+                    <div class="company-value-icon"><img src="images/icon-puzzle.png" alt="Комплексный подход"
+                            style="width:2.5rem;height:2.5rem;filter:invert(1)"></div>
+                    <h3 class="company-value-title">Комплексный подход</h3>
+                    <p class="company-value-desc">Система не генерирует идеи в стол. Вы забираете файлы, готовые к
+                        работе: распределение бюджета по каналам, 30+ вариантов креативов и форматы для загрузки
+                        напрямую в рекламные кабинеты.</p>
+                </div>
+                <div class="company-value-card">
+                    <div class="company-value-icon"><img src="images/icon-analysis.png" alt="Данные"
+                            style="width:2.5rem;height:2.5rem;filter:invert(1)"></div>
+                    <h3 class="company-value-title">Данные вместо вкусовщины</h3>
+                    <p class="company-value-desc">Никаких решений наугад. Платформа автоматически парсит конкурентов и
+                        исследует целевую аудиторию, находя свободные ниши и каналы, которые они упустили.</p>
+                </div>
+                <div class="company-value-card">
+                    <div class="company-value-icon"><img src="images/icon-control.png" alt="Управляемость"
+                            style="width:2.5rem;height:2.5rem;filter:invert(1)"></div>
+                    <h3 class="company-value-title">Полная управляемость</h3>
+                    <p class="company-value-desc">Маркетинг становится системным. Вы понимаете логику каждого
+                        предложенного шага. Если результат не устроил – просто меняете вводные. Итерации безлимитны,
+                        можно протестировать 10 разных гипотез за час.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ TIMELINE ============ -->
+    <section class="section">
+        <div class="container" style="max-width:900px">
+            <div style="text-align:center;margin-bottom:3rem">
+                <h2 class="section-title">Наш <span class="accent">путь</span></h2>
+            </div>
+            <div class="company-timeline">
+                <div class="company-timeline-item">
+                    <div class="company-timeline-dot"></div>
+                    <div class="company-timeline-year">2025 Q2</div>
+                    <div class="company-timeline-text">
+                        <h4>Исследование рынка</h4>
+                        <p>Проанализировали 500+ маркетинговых кейсов и выявили главную проблему: малый бизнес платит за
+                            шаблоны, а не за стратегию.</p>
+                    </div>
+                </div>
+                <div class="company-timeline-item">
+                    <div class="company-timeline-dot"></div>
+                    <div class="company-timeline-year">2025 Q3</div>
+                    <div class="company-timeline-text">
+                        <h4>Разработка ядра AI</h4>
+                        <p>Построили движок генерации стратегий на основе реальных данных. Обучили модель на фреймворках
+                            BBDO и McKinsey.</p>
+                    </div>
+                </div>
+                <div class="company-timeline-item">
+                    <div class="company-timeline-dot"></div>
+                    <div class="company-timeline-year">2025 Q4</div>
+                    <div class="company-timeline-text">
+                        <h4>Сборка платформы</h4>
+                        <p>Объединили стратегии, медиапланы и генерацию креативов в единый продукт. Внутреннее
+                            тестирование на реальных брифах.</p>
+                    </div>
+                </div>
+                <div class="company-timeline-item">
+                    <div class="company-timeline-dot"></div>
+                    <div class="company-timeline-year">2026</div>
+                    <div class="company-timeline-text">
+                        <h4>Запуск</h4>
+                        <p>Открытый доступ к платформе. Полный цикл: от брифа до готовых креативов и медиаплана за 20
+                            минут.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FINAL CTA ============ -->
+    <section class="section final-cta-section" style="min-height:600px">
+        <div class="cta-bg">
+            <img src="images/cta-bg-orange.webp" alt="" loading="lazy" />
+            <div class="gradient-top"></div>
+            <div class="gradient-bottom"></div>
+        </div>
+        <div class="cta-big-text">
+            <div>Creative Jam</div>
+        </div>
+        <div class="container" style="position:relative;z-index:10">
+            <div class="final-cta-content fcta">
+                <h2 class="fcta-heading">Присоединяйтесь к <span class="accent">будущему</span> маркетинга</h2>
+                <p class="fcta-sub">Первая стратегия бесплатно. Результат через 20 минут.</p>
+                <a href="javascript:void(0)" class="btn btn-primary fcta-btn" data-auth-action="trial">Попробовать
+                    бесплатно <span class="fcta-btn-arrow">+</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+        <div class="bg-grid-footer"></div>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about"><a href="index.html#hero" class="footer-logo">Creative <span>Jam</span></a>
+                    <p>AI-платформа для создания data-driven стратегий, медиапланов и креативных концепций.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Продукт</h4>
+                    <ul>
+                        <li><a href="index.html#demo">Демо</a></li>
+                        <li><a href="index.html#pricing">Тарифы</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Компания</h4>
+                    <ul>
+                        <li><a href="cases.html">Кейсы</a></li>
+                        <li><a href="company.html">О нас</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Creative Jam Inc.</p>
+                <div class="footer-legal"><a href="javascript:void(0)">Privacy Policy</a><a
+                        href="javascript:void(0)">Terms of Service</a></div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Custom Cursor
+        (function () {
+            const dot = document.getElementById('cursorDot');
+            const ring = document.getElementById('cursorRing');
+            let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+            if (window.matchMedia('(pointer: fine)').matches) {
+                function animateRing() {
+                    ringX += (mouseX - ringX) * 0.15;
+                    ringY += (mouseY - ringY) * 0.15;
+                    ring.style.left = ringX + 'px';
+                    ring.style.top = ringY + 'px';
+                    if (Math.abs(mouseX - ringX) > 0.5 || Math.abs(mouseY - ringY) > 0.5) requestAnimationFrame(animateRing);
+                }
+                document.addEventListener('mousemove', (e) => {
+                    mouseX = e.clientX; mouseY = e.clientY;
+                    dot.style.left = mouseX + 'px'; dot.style.top = mouseY + 'px';
+                    requestAnimationFrame(animateRing);
+                }, { passive: true });
+                document.querySelectorAll('a, button, input, textarea, [role="button"]').forEach(el => {
+                    el.addEventListener('mouseenter', () => { dot.classList.add('hovering'); ring.classList.add('hovering'); });
+                    el.addEventListener('mouseleave', () => { dot.classList.remove('hovering'); ring.classList.remove('hovering'); });
+                });
+            }
+        })();
+        // Burger toggle
+        const burger = document.getElementById('navBurger');
+        const mobilePanel = document.getElementById('navMobile');
+        if (burger && mobilePanel) {
+            burger.addEventListener('click', () => { burger.classList.toggle('active'); mobilePanel.classList.toggle('active'); document.body.style.overflow = mobilePanel.classList.contains('active') ? 'hidden' : ''; });
+            mobilePanel.querySelectorAll('a').forEach(link => { link.addEventListener('click', () => { burger.classList.remove('active'); mobilePanel.classList.remove('active'); document.body.style.overflow = ''; }); });
+        }
+    </script>
+
+    <script src="cookie-consent.js"></script>
+
+
+    <script>
+        // ═══ Scroll Reveal + Counter – unified with main page ═══
+        (function () {
+            var TRANSITION = 'opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+            var STAGGER = 150;
+
+            // ── Hero animation is handled by CSS @keyframes in <head> ──
+
+            // ── 1. Scroll-reveal: hide all scroll targets immediately ──
+            var scrollEls = document.querySelectorAll(
+                '.company-stat, .company-value-card, .company-timeline-item, ' +
+                '.final-cta-content, .section-title, .company-vision-text, ' +
+                '.fcta-heading, .fcta-sub, .fcta-btn, ' +
+                '.section .page-hero-label'
+            );
+            // Set hidden state immediately (no transition yet)
+            // Skip elements ABOVE the viewport — they stay visible (no blank gaps on reload)
+            scrollEls.forEach(function (el) {
+                var r = el.getBoundingClientRect();
+                if (r.bottom < 0) return; // above viewport — skip
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(60px)';
+            });
+
+            // ── 3. Start observing AFTER browser paints the hidden state ──
+            // Double-rAF ensures the browser has rendered opacity:0 before we start
+            requestAnimationFrame(function () {
+                requestAnimationFrame(function () {
+                    // Now add transitions
+                    scrollEls.forEach(function (el) {
+                        el.style.transition = TRANSITION;
+                    });
+
+                    var revealed = new Map();
+                    var observer = new IntersectionObserver(function (entries) {
+                        entries.forEach(function (entry) {
+                            if (!entry.isIntersecting) return;
+                            var el = entry.target;
+                            var parent = el.parentElement;
+                            if (!revealed.has(parent)) revealed.set(parent, 0);
+                            var idx = revealed.get(parent);
+                            revealed.set(parent, idx + 1);
+
+                            setTimeout(function () {
+                                el.style.opacity = '1';
+                                el.style.transform = 'none';
+                            }, idx * STAGGER);
+
+                            observer.unobserve(el);
+                        });
+                    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+                    scrollEls.forEach(function (el) { observer.observe(el); });
+                });
+            });
+
+            // ── 4. Counter animation for stat numbers ──
+            function animateCounter(el, target, suffix, prefix, duration) {
+                var start = 0, startTime = null;
+                function step(ts) {
+                    if (!startTime) startTime = ts;
+                    var p = Math.min((ts - startTime) / duration, 1);
+                    var eased = 1 - Math.pow(1 - p, 3);
+                    var cur = Math.round(target * eased);
+                    el.textContent = prefix + cur.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + suffix;
+                    if (p < 1) requestAnimationFrame(step);
+                }
+                requestAnimationFrame(step);
+            }
+
+            var statNums = document.querySelectorAll('.company-stat-num');
+            var counterObserver = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (!entry.isIntersecting) return;
+                    var el = entry.target;
+                    var text = el.textContent.trim();
+                    var match = text.match(/[\d\s]+/);
+                    if (!match) return;
+                    var num = parseInt(match[0].replace(/\s/g, ''), 10);
+                    if (!num) return;
+                    var idx = text.indexOf(match[0]);
+                    var prefix = text.substring(0, idx);
+                    var suffix = text.substring(idx + match[0].length);
+                    if (suffix && /^[a-zA-Zа-яА-ЯёЁ]/.test(suffix)) suffix = ' ' + suffix;
+                    animateCounter(el, num, suffix, prefix, 2000);
+                    counterObserver.unobserve(el);
+                });
+            }, { threshold: 0.3 });
+            statNums.forEach(function (el) { counterObserver.observe(el); });
+        })();
+    </script>
+
+    <!-- ═══════ AUTH MODAL ═══════ -->
+    <div id="authModalBackdrop" class="auth-modal-backdrop" role="dialog" aria-modal="true" aria-label="Авторизация">
+        <div class="auth-modal">
+            <button class="auth-modal-close" aria-label="Закрыть">&times;</button>
+            <div class="auth-modal-header">
+                <div class="auth-modal-logo"><span class="auth-modal-logo-white">CREATIVE</span><span
+                        class="auth-modal-logo-orange">JAM</span></div>
+                <h2>Добро пожаловать</h2>
+                <p>Создавайте креативный контент с помощью ИИ</p>
+            </div>
+            <div class="auth-modal-tabs">
+                <button class="auth-modal-tab active" data-tab="login">Вход</button>
+                <button class="auth-modal-tab" data-tab="register">Регистрация</button>
+            </div>
+            <div id="authPanel_login" class="auth-modal-panel active">
+                <div class="auth-modal-oauth">
+                    <button class="auth-modal-oauth-btn auth-modal-google-btn"><svg width="18" height="18"
+                            viewBox="0 0 18 18">
+                            <path fill="#4285F4"
+                                d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" />
+                            <path fill="#34A853"
+                                d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z" />
+                            <path fill="#FBBC05"
+                                d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z" />
+                            <path fill="#EA4335"
+                                d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z" />
+                        </svg> Войти через Google</button>
+                    <div class="auth-modal-vk-container" id="authVkContainerLogin"></div>
+                </div>
+                <div class="auth-modal-divider"><span>или</span></div>
+                <form id="authLoginForm">
+                    <div class="auth-modal-group"><label for="authLoginEmail">Email</label><input type="email"
+                            id="authLoginEmail" placeholder="your@email.com" required autocomplete="email"></div>
+                    <div class="auth-modal-group"><label for="authLoginPassword">Пароль</label><input type="password"
+                            id="authLoginPassword" placeholder="••••••••" required autocomplete="current-password">
+                    </div>
+                    <button type="submit" class="auth-modal-submit" id="authLoginSubmit"><span
+                            class="auth-btn-text">Войти</span><span class="auth-spinner"></span></button>
+                </form>
+            </div>
+            <div id="authPanel_register" class="auth-modal-panel">
+                <div class="auth-modal-oauth">
+                    <button class="auth-modal-oauth-btn auth-modal-google-btn"><svg width="18" height="18"
+                            viewBox="0 0 18 18">
+                            <path fill="#4285F4"
+                                d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" />
+                            <path fill="#34A853"
+                                d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z" />
+                            <path fill="#FBBC05"
+                                d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z" />
+                            <path fill="#EA4335"
+                                d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z" />
+                        </svg> Регистрация через Google</button>
+                    <div class="auth-modal-vk-container" id="authVkContainerSignup"></div>
+                </div>
+                <div class="auth-modal-divider"><span>или</span></div>
+                <form id="authRegisterForm">
+                    <div class="auth-modal-group"><label for="authRegisterName">Имя</label><input type="text"
+                            id="authRegisterName" placeholder="Ваше имя" required autocomplete="name"></div>
+                    <div class="auth-modal-group"><label for="authRegisterEmail">Email</label><input type="email"
+                            id="authRegisterEmail" placeholder="your@email.com" required autocomplete="email"></div>
+                    <div class="auth-modal-group"><label for="authRegisterPassword">Пароль</label><input type="password"
+                            id="authRegisterPassword" placeholder="Минимум 6 символов" required minlength="6"
+                            autocomplete="new-password"></div>
+                    <div class="auth-modal-terms"><input type="checkbox" id="authTermsAccepted" required><label
+                            for="authTermsAccepted">Я принимаю <a href="#">Условия использования</a> и <a
+                                href="#">Политику конфиденциальности</a></label></div>
+                    <button type="submit" class="auth-modal-submit" id="authRegisterSubmit"><span
+                            class="auth-btn-text">Зарегистрироваться</span><span class="auth-spinner"></span></button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="zoom-sync.js"></script>
+    <script src="auth-modal.js"></script>
+</body>
+
+</html>

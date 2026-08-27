@@ -1,0 +1,13 @@
+# Creative Jam — robots.txt
+User-agent: *
+Allow: /
+Allow: /cases
+Allow: /company
+Disallow: /app
+Disallow: /app/
+Disallow: /api/
+Disallow: /auth/
+Disallow: /platform-assets/
+
+# TODO: раскомментировать после покупки домена
+# Sitemap: https://creativejam.ru/sitemap.xml

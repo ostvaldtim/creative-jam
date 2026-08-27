@@ -1,0 +1,167 @@
+/**
+ * ANIMATIONS MODULE
+ * Micro-animations, page transitions, and interactive effects
+ */
+
+/* ══════════════════════════════════════════════════
+   PAGE TRANSITIONS
+   ══════════════════════════════════════════════════ */
+
+.page-fade-enter {
+    opacity: 0;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.page-fade-exit {
+    opacity: 1;
+    animation: fadeOut 0.2s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+/* ══════════════════════════════════════════════════
+   STAGGER ANIMATION for .project-item
+   ══════════════════════════════════════════════════ */
+
+.project-item {
+    opacity: 0;
+    animation: staggerFadeIn 0.4s ease forwards;
+}
+
+.project-item:nth-child(1) {
+    animation-delay: 0.05s;
+}
+
+.project-item:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.project-item:nth-child(3) {
+    animation-delay: 0.15s;
+}
+
+.project-item:nth-child(4) {
+    animation-delay: 0.2s;
+}
+
+.project-item:nth-child(5) {
+    animation-delay: 0.25s;
+}
+
+.project-item:nth-child(6) {
+    animation-delay: 0.3s;
+}
+
+.project-item:nth-child(7) {
+    animation-delay: 0.35s;
+}
+
+.project-item:nth-child(8) {
+    animation-delay: 0.4s;
+}
+
+.project-item:nth-child(9) {
+    animation-delay: 0.45s;
+}
+
+.project-item:nth-child(10) {
+    animation-delay: 0.5s;
+}
+
+@keyframes staggerFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ══════════════════════════════════════════════════
+   HOVER RIPPLE EFFECT for CTA buttons
+   (NOT applied to .run-btn — kept simple)
+   ══════════════════════════════════════════════════ */
+
+.cta-btn,
+.btn-primary {
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-btn::before,
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.cta-btn:hover::before,
+.btn-primary:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* ══════════════════════════════════════════════════
+   SMOOTH SCROLL for brief form fields
+   ══════════════════════════════════════════════════ */
+
+.brief-form-container {
+    scroll-behavior: smooth;
+}
+
+/* ══════════════════════════════════════════════════
+   IMPROVED EXPAND/COLLAPSE ANIMATION
+   ══════════════════════════════════════════════════ */
+
+.expand-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease, margin-top 0.3s ease;
+}
+
+.expand-content.show {
+    max-height: 2000px;
+    /* Large enough to accommodate content */
+    opacity: 1;
+    margin-top: 20px;
+}
+
+/* Override the old display: none approach */
+.expand-btn svg {
+    transition: transform 0.3s ease;
+}
+
+.expand-btn.open svg {
+    transform: rotate(180deg);
+}

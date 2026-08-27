@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>Сценарии использования – Creative Jam</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <!-- TODO: заменить на полный URL после покупки домена -->
+    <link rel="canonical" href="/cases">
+    <meta name="description"
+        content="Как Creative Jam работает для разных типов бизнеса: eCom, SaaS, EdTech, маркетплейсы, сети и локальный бизнес." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Сценарии использования – Creative Jam" />
+    <meta property="og:description" content="Как Creative Jam работает для разных типов бизнеса: eCom, SaaS, EdTech, маркетплейсы." />
+    <meta property="og:image" content="/images/og-image.png" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="/images/og-image.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="auth-modal.css" />
+    <style>
+        @keyframes heroFadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        .page-hero .page-hero-title {
+            opacity: 0;
+            animation: heroFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+        }
+
+        .page-hero .page-hero-sub {
+            opacity: 0;
+            animation: heroFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <div class="page-bg" aria-hidden="true">
+        <div class="page-bg-gradient"></div>
+        <div class="page-bg-noise"></div>
+        <div class="page-bg-grid"></div>
+        <div class="page-bg-orbs">
+            <div class="page-orb orb-1"></div>
+            <div class="page-orb orb-2"></div>
+            <div class="page-orb orb-3"></div>
+            <div class="page-orb orb-4"></div>
+        </div>
+    </div>
+
+    <!-- ============ NAVBAR ============ -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html#hero" class="navbar-logo">Creative <span>Jam</span></a>
+            <div class="navbar-links">
+                <div class="nav-item"><a href="cases.html" class="nav-link">Кейсы</a></div>
+                <div class="nav-item"><a href="company.html" class="nav-link">О нас</a></div>
+            </div>
+            <div class="navbar-actions">
+                <button class="btn btn-ghost btn-hidden-sm" data-auth-action="login">Войти</button>
+                <button class="btn btn-primary" data-auth-action="trial">Попробовать бесплатно</button>
+                <button class="nav-burger" id="navBurger"
+                    aria-label="Открыть меню"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+        <div class="nav-mobile" id="navMobile">
+            <div class="nav-mobile-inner">
+                <a href="cases.html" class="nav-mobile-link">Кейсы</a>
+                <a href="company.html" class="nav-mobile-link">О нас</a>
+                <div class="nav-mobile-actions"><button class="btn btn-ghost" style="width:100%"
+                        data-auth-action="login">Войти</button><button class="btn btn-primary" style="width:100%"
+                        data-auth-action="trial">Попробовать бесплатно</button></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============ PAGE HERO ============ -->
+    <section class="page-hero" style="padding:10rem 0 4rem">
+        <div class="page-hero-bg"></div>
+        <div class="container">
+            <div class="page-hero-content" style="max-width:900px">
+                <h1 class="page-hero-title">
+                    Creative <span class="accent">Jam</span> работает для разных типов бизнеса
+                </h1>
+                <p class="page-hero-sub" style="max-width:100%;margin:1.25rem auto 0">
+                    Готовые сценарии запуска рекламы для&nbsp;вашей ниши.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ USE-CASES GRID ============ -->
+    <section class="section uc-section" style="padding-top:2rem">
+        <div class="container">
+            <div class="uc-grid">
+
+                <!-- Card 1: eCom -->
+                <article class="uc-card" style="--seg:#FF6800">
+                    <div class="uc-top">
+                        <span class="uc-label">eCom</span>
+                    </div>
+                    <h3 class="uc-headline">50 гипотез в месяц без ручной сборки</h3>
+                    <p class="uc-summary">Связки «оффер → креатив → канал» для акций и новых SKU.</p>
+                    <div class="uc-sep"></div>
+                    <ul class="uc-rows">
+                        <li>Креативы под карточки и лендинги</li>
+                        <li>Медиасплит по каналам автоматом</li>
+                        <li>Итерации за минуты, не за спринты</li>
+                    </ul>
+                    <div class="uc-sep"></div>
+                    <div class="uc-outcome">Цикл теста: неделя → один день</div>
+                    <a href="index.html#pricing" class="uc-cta">Попробовать →</a>
+                </article>
+
+                <!-- Card 2: SaaS -->
+                <article class="uc-card" style="--seg:#3B82F6">
+                    <div class="uc-top">
+                        <span class="uc-label">SaaS / B2B</span>
+                    </div>
+                    <h3 class="uc-headline">Performance-кампании при малом бюджете</h3>
+                    <p class="uc-summary">Лидген с точной сегментацией без агентства.</p>
+                    <div class="uc-sep"></div>
+                    <ul class="uc-rows">
+                        <li>Сообщения под ICP и персоны</li>
+                        <li>Медиаплан с распределением по каналам</li>
+                        <li>A/B-гипотезы готовы до запуска</li>
+                    </ul>
+                    <div class="uc-sep"></div>
+                    <div class="uc-outcome">От брифа до первого теста — 20 минут</div>
+                    <a href="index.html#pricing" class="uc-cta">Попробовать →</a>
+                </article>
+
+                <!-- Card 3: Multi-location -->
+                <article class="uc-card" style="--seg:#10B981">
+                    <div class="uc-top">
+                        <span class="uc-label">Сети</span>
+                    </div>
+                    <h3 class="uc-headline">1 бриф — 10 филиалов, единый стиль</h3>
+                    <p class="uc-summary">Локальная адаптация без ручного клонирования.</p>
+                    <div class="uc-sep"></div>
+                    <ul class="uc-rows">
+                        <li>Шаблоны с привязкой к гео и офферу</li>
+                        <li>Единый бренд, разные месседжи</li>
+                        <li>Масштаб без роста команды</li>
+                    </ul>
+                    <div class="uc-sep"></div>
+                    <div class="uc-outcome">Все филиалы запущены за один день</div>
+                    <a href="index.html#pricing" class="uc-cta">Попробовать →</a>
+                </article>
+
+                <!-- Card 4: EdTech -->
+                <article class="uc-card" style="--seg:#A855F7">
+                    <div class="uc-top">
+                        <span class="uc-label">EdTech</span>
+                    </div>
+                    <h3 class="uc-headline">Набор студентов без перегрузки маркетинга</h3>
+                    <p class="uc-summary">Реклама под курсы, аудитории и окна набора.</p>
+                    <div class="uc-sep"></div>
+                    <ul class="uc-rows">
+                        <li>Креативы под каждый курс отдельно</li>
+                        <li>Адаптация под сезонные запуски</li>
+                        <li>Контроль unit-экономики в медиаплане</li>
+                    </ul>
+                    <div class="uc-sep"></div>
+                    <div class="uc-outcome">Масштаб рекламы без скачков CPA</div>
+                    <a href="index.html#pricing" class="uc-cta">Попробовать →</a>
+                </article>
+
+                <!-- Card 5: Marketplace -->
+                <article class="uc-card" style="--seg:#F59E0B">
+                    <div class="uc-top">
+                        <span class="uc-label">Sellers</span>
+                    </div>
+                    <h3 class="uc-headline">Внешний трафик, точный под карточку</h3>
+                    <p class="uc-summary">Креативы, совпадающие с логикой товара.</p>
+                    <div class="uc-sep"></div>
+                    <ul class="uc-rows">
+                        <li>Генерация под конкретные SKU</li>
+                        <li>Форматы VK, Telegram, myTarget</li>
+                        <li>«Товар → оффер → баннер» за клик</li>
+                    </ul>
+                    <div class="uc-sep"></div>
+                    <div class="uc-outcome">Запуск внешнего трафика без дизайнера</div>
+                    <a href="index.html#pricing" class="uc-cta">Попробовать →</a>
+                </article>
+
+                <!-- Card 6: Services -->
+                <article class="uc-card" style="--seg:#EC4899">
+                    <div class="uc-top">
+                        <span class="uc-label">Услуги</span>
+                    </div>
+                    <h3 class="uc-headline">5 услуг и 3 филиала — один запуск</h3>
+                    <p class="uc-summary">Параллельные кампании без потери фокуса.</p>
+                    <div class="uc-sep"></div>
+                    <ul class="uc-rows">
+                        <li>Раздельные стратегии по услугам</li>
+                        <li>Адаптация под район и аудиторию</li>
+                        <li>Полный цикл: стратегия → баннер</li>
+                    </ul>
+                    <div class="uc-sep"></div>
+                    <div class="uc-outcome">Запуск локальных кампаний за 1 сессию</div>
+                    <a href="index.html#pricing" class="uc-cta">Попробовать →</a>
+                </article>
+
+            </div>
+
+            <p class="uc-note">Сценарии собраны на основе демо-запусков и текущих проектов.</p>
+        </div>
+    </section>
+
+    <!-- ============ FINAL CTA ============ -->
+    <section class="section final-cta-section" style="min-height:600px">
+        <div class="cta-bg">
+            <img src="images/cta-bg-orange.webp" alt="" loading="lazy" />
+            <div class="gradient-top"></div>
+            <div class="gradient-bottom"></div>
+        </div>
+        <div class="cta-big-text">
+            <div>Creative Jam</div>
+        </div>
+        <div class="container" style="position:relative;z-index:10">
+            <div class="final-cta-content fcta">
+                <h2 class="fcta-heading">Следующий шаг &ndash; <span class="accent">ваш сценарий</span></h2>
+                <p class="fcta-sub">Готовый сценарий запуска под ваш продукт, оффер и каналы продвижения.</p>
+                <a href="javascript:void(0)" class="btn btn-primary fcta-btn" data-auth-action="trial">Попробовать
+                    бесплатно <span class="fcta-btn-arrow">+</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+        <div class="bg-grid-footer"></div>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about"><a href="index.html#hero" class="footer-logo">Creative <span>Jam</span></a>
+                    <p>AI-платформа для создания data-driven стратегий, медиапланов и креативных концепций.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Продукт</h4>
+                    <ul>
+                        <li><a href="index.html#demo">Демо</a></li>
+                        <li><a href="index.html#pricing">Тарифы</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Компания</h4>
+                    <ul>
+                        <li><a href="cases.html">Кейсы</a></li>
+                        <li><a href="company.html">О нас</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Creative Jam Inc.</p>
+                <div class="footer-legal"><a href="javascript:void(0)">Privacy Policy</a><a
+                        href="javascript:void(0)">Terms of Service</a></div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Custom Cursor
+        (function () {
+            const dot = document.getElementById('cursorDot');
+            const ring = document.getElementById('cursorRing');
+            let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+            if (window.matchMedia('(pointer: fine)').matches) {
+                function animateRing() {
+                    ringX += (mouseX - ringX) * 0.15;
+                    ringY += (mouseY - ringY) * 0.15;
+                    ring.style.left = ringX + 'px';
+                    ring.style.top = ringY + 'px';
+                    if (Math.abs(mouseX - ringX) > 0.5 || Math.abs(mouseY - ringY) > 0.5) requestAnimationFrame(animateRing);
+                }
+                document.addEventListener('mousemove', (e) => {
+                    mouseX = e.clientX; mouseY = e.clientY;
+                    dot.style.left = mouseX + 'px'; dot.style.top = mouseY + 'px';
+                    requestAnimationFrame(animateRing);
+                }, { passive: true });
+                document.querySelectorAll('a, button, input, textarea, [role="button"]').forEach(el => {
+                    el.addEventListener('mouseenter', () => { dot.classList.add('hovering'); ring.classList.add('hovering'); });
+                    el.addEventListener('mouseleave', () => { dot.classList.remove('hovering'); ring.classList.remove('hovering'); });
+                });
+            }
+        })();
+        // Burger toggle
+        const burger = document.getElementById('navBurger');
+        const mobilePanel = document.getElementById('navMobile');
+        if (burger && mobilePanel) {
+            burger.addEventListener('click', () => { burger.classList.toggle('active'); mobilePanel.classList.toggle('active'); document.body.style.overflow = mobilePanel.classList.contains('active') ? 'hidden' : ''; });
+            mobilePanel.querySelectorAll('a').forEach(link => { link.addEventListener('click', () => { burger.classList.remove('active'); mobilePanel.classList.remove('active'); document.body.style.overflow = ''; }); });
+        }
+    </script>
+    <script src="cookie-consent.js"></script>
+    <script>
+        // Scroll reveal
+        (function () {
+            var T = 'opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)';
+            var S = 100;
+            var els = document.querySelectorAll('.uc-card, .uc-note, .final-cta-content, .fcta-heading, .fcta-sub, .fcta-btn');
+            // Skip elements ABOVE the viewport — they stay visible (no blank gaps on reload)
+            els.forEach(function (el) { var r = el.getBoundingClientRect(); if (r.bottom < 0) return; el.style.opacity = '0'; el.style.transform = 'translateY(40px)'; });
+            requestAnimationFrame(function () {
+                requestAnimationFrame(function () {
+                    els.forEach(function (el) { el.style.transition = T; });
+                    var revealed = new Map();
+                    var obs = new IntersectionObserver(function (entries) {
+                        entries.forEach(function (e) {
+                            if (!e.isIntersecting) return;
+                            var el = e.target, p = el.parentElement;
+                            if (!revealed.has(p)) revealed.set(p, 0);
+                            var i = revealed.get(p); revealed.set(p, i + 1);
+                            setTimeout(function () { el.style.opacity = '1'; el.style.transform = 'none'; }, i * S);
+                            obs.unobserve(el);
+                        });
+                    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+                    els.forEach(function (el) { obs.observe(el); });
+                });
+            });
+        })();
+    </script>
+
+    <!-- ═══════ AUTH MODAL ═══════ -->
+    <div id="authModalBackdrop" class="auth-modal-backdrop" role="dialog" aria-modal="true" aria-label="Авторизация">
+        <div class="auth-modal">
+            <button class="auth-modal-close" aria-label="Закрыть">&times;</button>
+            <div class="auth-modal-header">
+                <div class="auth-modal-logo"><span class="auth-modal-logo-white">CREATIVE</span><span
+                        class="auth-modal-logo-orange">JAM</span></div>
+                <h2>Добро пожаловать</h2>
+                <p>Создавайте креативный контент с помощью ИИ</p>
+            </div>
+            <div class="auth-modal-tabs">
+                <button class="auth-modal-tab active" data-tab="login">Вход</button>
+                <button class="auth-modal-tab" data-tab="register">Регистрация</button>
+            </div>
+            <div id="authPanel_login" class="auth-modal-panel active">
+                <div class="auth-modal-oauth">
+                    <button class="auth-modal-oauth-btn auth-modal-google-btn"><svg width="18" height="18"
+                            viewBox="0 0 18 18">
+                            <path fill="#4285F4"
+                                d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" />
+                            <path fill="#34A853"
+                                d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z" />
+                            <path fill="#FBBC05"
+                                d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z" />
+                            <path fill="#EA4335"
+                                d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z" />
+                        </svg> Войти через Google</button>
+                    <div class="auth-modal-vk-container" id="authVkContainerLogin"></div>
+                </div>
+                <div class="auth-modal-divider"><span>или</span></div>
+                <form id="authLoginForm">
+                    <div class="auth-modal-group"><label for="authLoginEmail">Email</label><input type="email"
+                            id="authLoginEmail" placeholder="your@email.com" required autocomplete="email"></div>
+                    <div class="auth-modal-group"><label for="authLoginPassword">Пароль</label><input type="password"
+                            id="authLoginPassword" placeholder="••••••••" required autocomplete="current-password">
+                    </div>
+                    <button type="submit" class="auth-modal-submit" id="authLoginSubmit"><span
+                            class="auth-btn-text">Войти</span><span class="auth-spinner"></span></button>
+                </form>
+            </div>
+            <div id="authPanel_register" class="auth-modal-panel">
+                <div class="auth-modal-oauth">
+                    <button class="auth-modal-oauth-btn auth-modal-google-btn"><svg width="18" height="18"
+                            viewBox="0 0 18 18">
+                            <path fill="#4285F4"
+                                d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" />
+                            <path fill="#34A853"
+                                d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z" />
+                            <path fill="#FBBC05"
+                                d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z" />
+                            <path fill="#EA4335"
+                                d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z" />
+                        </svg> Регистрация через Google</button>
+                    <div class="auth-modal-vk-container" id="authVkContainerSignup"></div>
+                </div>
+                <div class="auth-modal-divider"><span>или</span></div>
+                <form id="authRegisterForm">
+                    <div class="auth-modal-group"><label for="authRegisterName">Имя</label><input type="text"
+                            id="authRegisterName" placeholder="Ваше имя" required autocomplete="name"></div>
+                    <div class="auth-modal-group"><label for="authRegisterEmail">Email</label><input type="email"
+                            id="authRegisterEmail" placeholder="your@email.com" required autocomplete="email"></div>
+                    <div class="auth-modal-group"><label for="authRegisterPassword">Пароль</label><input type="password"
+                            id="authRegisterPassword" placeholder="Минимум 6 символов" required minlength="6"
+                            autocomplete="new-password"></div>
+                    <div class="auth-modal-terms"><input type="checkbox" id="authTermsAccepted" required><label
+                            for="authTermsAccepted">Я принимаю <a href="#">Условия использования</a> и <a
+                                href="#">Политику конфиденциальности</a></label></div>
+                    <button type="submit" class="auth-modal-submit" id="authRegisterSubmit"><span
+                            class="auth-btn-text">Зарегистрироваться</span><span class="auth-spinner"></span></button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="zoom-sync.js"></script>
+    <script src="auth-modal.js"></script>
+</body>
+
+</html>
