@@ -34,4 +34,4 @@ Active development. Tested by real users; previously deployed on Hugging Face Sp
 
 ---
 
-Built by **Artem Ostvald** and **Zakhar Kondratiev**.
+Built by **Tim Ostvald** and **Zakhar Kondratiev**.
