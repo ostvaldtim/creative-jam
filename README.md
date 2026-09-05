@@ -2,6 +2,8 @@
 
 AI-assisted product for turning a brief into a structured research-driven report.
 
+**Live demo:** https://huggingface.co/spaces/Ostvald/creative-jam
+
 ![Creative Jam landing](docs/screenshots/landing-hero.webp)
 
 ## What is public here
@@ -30,7 +32,7 @@ Frontend/backend implementation, database setup, payment integration, AI report-
 
 ## Status
 
-Active development. Tested by real users; previously deployed on Hugging Face Spaces during prototyping.
+Active development. Tested by real users and currently running as a Docker Space on Hugging Face.
 
 ---
 
